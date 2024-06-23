@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://dcy33ghg8gd1p"]
+
+[node name="MoneyManagerMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -824.0
+offset_bottom = -520.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ArrowRight" type="Button" parent="."]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -63.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "->"
+
+[node name="Select" type="Button" parent="."]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -31.5
+offset_right = 31.5
+offset_bottom = 31.0
+grow_horizontal = 2
+text = "SELECT"
+
+[node name="ArrowLeft" type="Button" parent="."]
+layout_direction = 2
+layout_mode = 1
+offset_right = 63.0
+offset_bottom = 31.0
+text = "<-"
+
+[node name="Count" type="Button" parent="."]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Count"
+
+[node name="Flip" type="Button" parent="."]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -31.5
+offset_top = -31.0
+offset_right = 31.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "Flip"
+
+[node name="Bundle" type="Button" parent="."]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 63.0
+grow_vertical = 0
+text = "Bundle"

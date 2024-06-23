@@ -26,7 +26,7 @@ offset_right = 281.0
 offset_bottom = 59.272
 grow_vertical = 0
 
-[node name="BillsControl" type="Control" parent="."]
+[node name="Bills" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 
