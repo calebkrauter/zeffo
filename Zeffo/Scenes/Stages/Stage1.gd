@@ -1,6 +1,6 @@
 extends Node2D
 const BILL_LAYOUT_CONTAINER = preload("res://Scenes/EntitiyContainerScenes/bill_layout_container.tscn")
-@onready var bills = $BillsControl
+@onready var bills = $BillsFrame/BillsControl
 # Called when the node enters the scene tree for the first time.
 
 # Called when the node enters the scene tree for the first time.

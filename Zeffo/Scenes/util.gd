@@ -1,6 +1,7 @@
 extends Node2D
+var paused = false
 var bills = []
-var billQuantity = 5
+var billQuantity = 10
 var curBillIndex = billQuantity/2 + 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,3 +14,4 @@ func _process(delta):
 		curBillIndex = 0
 	elif curBillIndex >= billQuantity - 1:
 		curBillIndex = billQuantity - 1
+	

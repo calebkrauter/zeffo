@@ -14,7 +14,7 @@ func _process(delta):
 
 func gen_bills(quantity):
 	var newBill
-	var originPosX = 200
+	var originPosX = 100
 	var originPosY = 250
 
 	for i in quantity:
@@ -23,4 +23,3 @@ func gen_bills(quantity):
 		newBill.position.x += originPosX + i * 100
 		newBill.position.y = originPosY
 		Util.bills.append(newBill)
-	Util.bills[Util.curBillIndex].get_node("BillSelect").show()
