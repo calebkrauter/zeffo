@@ -4,7 +4,8 @@ extends Node2D
 var isSelected = false
 #var isFlipped = false
 var denomination
-
+func set_val(x):
+	denomination = x
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

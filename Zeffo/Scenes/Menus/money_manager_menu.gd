@@ -85,10 +85,15 @@ func unselect_cur_bill():
 # Duplicate didn't seem to help.
 func move_selected_bill(selectedBillIndex, targetIndex):
 	var tempBill = Util.bills[targetIndex]
+	var selectedBillDenomination = Util.bills[selectedBillIndex].denomination
 	var tempBillDenomination = Util.bills[targetIndex].denomination
+	print(tempBillDenomination)
 	if Util.bills[selectedBillIndex].isSelected:
 		Util.bills[targetIndex] = (Util.bills[selectedBillIndex]) 
-		Util.bills[targetIndex].denomination = Util.bills[selectedBillIndex].denomination
+
+		Util.bills[targetIndex].set_val(selectedBillDenomination)
 		Util.bills[selectedBillIndex].denomination = tempBillDenomination
 		Util.bills[selectedBillIndex] = tempBill
+	Util.bills[selectedBillIndex].set_val(tempBillDenomination)
+	print(Util.bills[selectedBillIndex].denomination)
 
