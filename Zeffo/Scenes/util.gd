@@ -10,8 +10,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	is_in_bill_array_bounds()
+
+func is_in_bill_array_bounds():
 	if curBillIndex <= 0:
 		curBillIndex = 0
 	elif curBillIndex >= billQuantity - 1:
 		curBillIndex = billQuantity - 1
-	

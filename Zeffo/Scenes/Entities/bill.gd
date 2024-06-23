@@ -1,11 +1,13 @@
 class_name Bill
 extends Node2D
-@onready var bill_select = $BillSelect
+@onready var bill_Select = $BillSelect
+var isSelected = false
+#var isFlipped = false
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	bill_select.hide()
+	bill_Select.hide()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 
 [autoload]
 
-Util="*res://Scenes/util.tscn"
+Util="*res://Scenes/util.gd"
 
 [rendering]
 

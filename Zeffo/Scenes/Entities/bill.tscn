@@ -39,12 +39,12 @@ script = ExtResource("1_h84j7")
 
 [node name="BillSelect" type="AnimatedSprite2D" parent="."]
 position = Vector2(-2.98023e-06, 1.04999)
-scale = Vector2(0.438095, 0.415882)
+scale = Vector2(0.442, 0.42)
 sprite_frames = SubResource("SpriteFrames_lrbkt")
 frame = 1
 frame_progress = 1.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Bill2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_nuj4u")
 animation = &"dollar"
