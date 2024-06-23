@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://byekplr603p3"]
+
+[ext_resource type="Script" path="res://Scenes/Menus/main_menu.gd" id="1_y7sve"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_y7sve")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 44.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+text = "PLAY"
+
+[node name="Options" type="Button" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+text = "OPTIONS"
+
+[node name="Credits" type="Button" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+text = "CREDITS"
+
+[node name="Quit" type="Button" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+text = "QUIT"
+
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

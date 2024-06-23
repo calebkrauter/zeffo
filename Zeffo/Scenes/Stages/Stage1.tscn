@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjpan7gptw1tp"]
+
+[ext_resource type="PackedScene" uid="uid://b4x7kejgosoke" path="res://Scenes/ControlsUI/pause_btn.tscn" id="1_s6lad"]
+
+[node name="Stage1" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PauseBtn" parent="Control" instance=ExtResource("1_s6lad")]

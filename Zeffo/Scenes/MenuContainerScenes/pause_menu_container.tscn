@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl7o3r38tshs0"]
+
+[ext_resource type="PackedScene" uid="uid://b3csr0jqu8hqs" path="res://Scenes/Menus/pause_menu.tscn" id="1_fom21"]
+
+[node name="PauseMenuContainer" type="Node2D"]
+
+[node name="PauseMenu" parent="." instance=ExtResource("1_fom21")]
+layout_direction = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 540.0
+offset_top = 200.0
+offset_right = 540.0
+offset_bottom = 200.0

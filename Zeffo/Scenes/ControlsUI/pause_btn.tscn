@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4x7kejgosoke"]
+
+[ext_resource type="Script" path="res://Scenes/ControlsUI/pause_btn.gd" id="1_j21sl"]
+[ext_resource type="PackedScene" uid="uid://dl7o3r38tshs0" path="res://Scenes/MenuContainerScenes/pause_menu_container.tscn" id="2_dqia6"]
+
+[node name="PauseBtn" type="Node2D"]
+script = ExtResource("1_j21sl")
+
+[node name="PauseMenuContainer" parent="." instance=ExtResource("2_dqia6")]
+
+[node name="PauseBtn" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "PAUSE
+"
+
+[connection signal="pressed" from="PauseBtn" to="." method="_on_button_pressed"]
