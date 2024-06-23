@@ -23,3 +23,9 @@ func gen_bills(quantity):
 		newBill.position.x += originPosX + i * 100
 		newBill.position.y = originPosY
 		Util.bills.append(newBill)
+		
+#Temp assign diff values to some bills to ensure selection works proprerly.
+		if i % 2 == 0:
+			Util.bills[i].denomination = 1
+		else:
+			Util.bills[i].denomination = 5

@@ -32,7 +32,8 @@ func _on_select_pressed():
 	else:
 		Util.bills[Util.curBillIndex].isSelected = true
 	select_cur_bill()
-	print(Util.curBillIndex)
+	print(Util.bills[Util.curBillIndex].denomination)
+
 
 
 func _on_arrow_left_pressed():
@@ -46,7 +47,7 @@ func _on_arrow_left_pressed():
 	Util.bills[Util.curBillIndex].isSelected = true
 	if selectBtnPressed:
 		move_selected_bill(selectedBillIndex, Util.curBillIndex)
-	print(Util.curBillIndex)
+	print(Util.bills[Util.curBillIndex].denomination)
 
 func _on_arrow_right_pressed():
 	unselect_cur_bill()
@@ -59,7 +60,7 @@ func _on_arrow_right_pressed():
 	Util.bills[Util.curBillIndex].isSelected = true
 	if selectBtnPressed:
 		move_selected_bill(selectedBillIndex, Util.curBillIndex)
-	print(Util.curBillIndex)
+	print(Util.bills[Util.curBillIndex].denomination)
 
 func _on_count_pressed():
 	pass # Replace with function body.
@@ -78,9 +79,16 @@ func select_cur_bill():
 func unselect_cur_bill():
 	Util.bills[Util.curBillIndex].get_node("BillSelect").hide()
 
+# TODO: fix bug where moving a bill doesn't actually move it.
+# The denomination is printing in console and should indicate wheter it 
+# swaps bills or not. Currently it does not. Might be that the copy isn't deep.
+# Duplicate didn't seem to help.
 func move_selected_bill(selectedBillIndex, targetIndex):
 	var tempBill = Util.bills[targetIndex]
+	var tempBillDenomination = Util.bills[targetIndex].denomination
 	if Util.bills[selectedBillIndex].isSelected:
-		Util.bills[targetIndex] = Util.bills[selectedBillIndex]
+		Util.bills[targetIndex] = (Util.bills[selectedBillIndex]) 
+		Util.bills[targetIndex].denomination = Util.bills[selectedBillIndex].denomination
+		Util.bills[selectedBillIndex].denomination = tempBillDenomination
 		Util.bills[selectedBillIndex] = tempBill
 
