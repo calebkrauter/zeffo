@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dcy33ghg8gd1p"]
+[gd_scene load_steps=2 format=3 uid="uid://dcy33ghg8gd1p"]
+
+[ext_resource type="Script" path="res://Scenes/Menus/money_manager_menu.gd" id="1_c7vhb"]
 
 [node name="MoneyManagerMenu" type="Control"]
 layout_mode = 3
@@ -9,6 +11,7 @@ offset_right = -824.0
 offset_bottom = -520.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_c7vhb")
 
 [node name="ArrowRight" type="Button" parent="."]
 layout_direction = 2
@@ -79,3 +82,10 @@ offset_top = -31.0
 offset_right = 63.0
 grow_vertical = 0
 text = "Bundle"
+
+[connection signal="pressed" from="ArrowRight" to="." method="_on_arrow_right_pressed"]
+[connection signal="pressed" from="Select" to="." method="_on_select_pressed"]
+[connection signal="pressed" from="ArrowLeft" to="." method="_on_arrow_left_pressed"]
+[connection signal="pressed" from="Count" to="." method="_on_count_pressed"]
+[connection signal="pressed" from="Flip" to="." method="_on_flip_pressed"]
+[connection signal="pressed" from="Bundle" to="." method="_on_bundle_pressed"]

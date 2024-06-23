@@ -13,7 +13,10 @@ config_version=5
 config/name="Zeffo"
 run/main_scene="res://Scenes/MenuContainerScenes/start_scene.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://icon.svg"
+
+[autoload]
+
+Util="*res://Scenes/util.tscn"
 
 [rendering]
 
