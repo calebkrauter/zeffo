@@ -20,10 +20,3 @@ offset_right = -40.0
 offset_bottom = -55.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="CashTotal" type="Label" parent="Camera2D"]
-offset_left = -569.0
-offset_top = -280.0
-offset_right = -391.0
-offset_bottom = -257.0
-text = "Cash Total Verification:"

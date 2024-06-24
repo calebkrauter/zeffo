@@ -27,10 +27,10 @@ func gen_bills(quantity):
 #Temp assign diff values to some bills to ensure selection works proprerly.
 		if i % 2 == 0:
 			#Util.bills[i].denomination = 1
-			Util.bills[i].get_node("Bill2D").play("one")
+			Util.bills[i].get_node("Bill2D").play("1")
 			Util.bills[i].set_flipped(false)
-			Util.bills[i].set_denomination("one")
+			Util.bills[i].set_denomination("1")
 		else:
 			#Util.bills[i].denomination = 5
-			Util.bills[i].get_node("Bill2D").play("five")
-			Util.bills[i].set_denomination("five")
+			Util.bills[i].get_node("Bill2D").play("5")
+			Util.bills[i].set_denomination("5")

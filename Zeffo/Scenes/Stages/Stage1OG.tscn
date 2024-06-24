@@ -48,3 +48,10 @@ anchors_preset = 0
 
 [node name="PauseBtn" parent="PauseControl" instance=ExtResource("1_s6lad")]
 position = Vector2(-575, -322)
+
+[node name="CashTotal" type="Label" parent="."]
+offset_left = -569.0
+offset_top = -280.0
+offset_right = -391.0
+offset_bottom = -257.0
+text = "Cash Total Verification:"

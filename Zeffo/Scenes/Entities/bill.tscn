@@ -25,22 +25,22 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_fs8ht")
-}],
-"loop": false,
-"name": &"five",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("1_okp0y")
 }, {
 "duration": 1.0,
 "texture": ExtResource("2_jl5vg")
 }],
 "loop": false,
-"name": &"one",
+"name": &"1",
 "speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_fs8ht")
+}],
+"loop": false,
+"name": &"5",
+"speed": 5.0
 }]
 
 [node name="Bill" type="Node2D"]
@@ -56,4 +56,4 @@ frame_progress = 1.0
 [node name="Bill2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_nuj4u")
-animation = &"one"
+animation = &"1"

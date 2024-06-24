@@ -4,7 +4,7 @@ extends Node2D
 var isSelected = false
 var isFlipped = false
 var isBundled = false
-var denomination = "one"
+var denomination = "1"
 
 
 func set_denomination(denomination_in):
