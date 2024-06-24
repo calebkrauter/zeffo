@@ -16,6 +16,8 @@ func get_denomination():
 func set_flipped(flipped_in):
 	self.isFlipped = flipped_in
 
+func is_flipped():
+	return self.isFlipped
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	bill_Select.hide()

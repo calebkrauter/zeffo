@@ -67,7 +67,13 @@ func _on_count_pressed():
 
 
 func _on_flip_pressed():
-	pass # Replace with function body.
+	var curBill = Util.bills[Util.curBillIndex]
+	if curBill.is_flipped():
+		curBill.get_node("Bill2D").frame = 0
+		curBill.set_flipped(false)
+	else:
+		curBill.get_node("Bill2D").frame = 1
+		curBill.set_flipped(true)
 
 
 func _on_bundle_pressed():
