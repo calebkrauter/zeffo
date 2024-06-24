@@ -3,6 +3,7 @@ extends Node2D
 @onready var bill_Select = $BillSelect
 var isSelected = false
 var isFlipped = false
+var heads = true
 var isBundled = false
 var denomination = "1"
 
