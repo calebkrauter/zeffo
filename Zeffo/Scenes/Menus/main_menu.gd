@@ -16,7 +16,7 @@ func _process(delta):
 
 
 func _on_play_pressed():
-	get_tree().change_scene_to_file("res://Scenes/Stages/Stage1.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Stages/Stage1OG.tscn")
 
 func _on_quit_pressed():
 	get_tree().quit()

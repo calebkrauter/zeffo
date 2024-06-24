@@ -5,10 +5,6 @@ extends Node2D
 @onready var money_manager_control = $"../../MoneyManagerControl"
 @onready var bills_control = $"../../BillsFrame/BillsControl"
 
-const STAGE_1 = preload("res://Scenes/Stages/Stage1.tscn")
-#@onready var bills_parent = STAGE_1.$Bills
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pause_menu_container.hide()
