@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvat2vkoq103l"]
+[gd_scene load_steps=9 format=3 uid="uid://bvat2vkoq103l"]
 
 [ext_resource type="Script" path="res://Scenes/Entities/bill.gd" id="1_h84j7"]
 [ext_resource type="Texture2D" uid="uid://dta76sr7kyj3e" path="res://Assets/Entities/Bills/dollarDown.png" id="1_okp0y"]
 [ext_resource type="Texture2D" uid="uid://cji2i37nx2q3f" path="res://Assets/Entities/BillManagementUI/BillEnhance/billSelect1.png" id="2_2j4p6"]
 [ext_resource type="Texture2D" uid="uid://bjbnv1br500hj" path="res://Assets/Entities/Bills/dollarUp.png" id="2_jl5vg"]
 [ext_resource type="Texture2D" uid="uid://cypv1pg5fsmr2" path="res://Assets/Entities/BillManagementUI/BillEnhance/billSelect2.png" id="3_qd5rw"]
+[ext_resource type="Texture2D" uid="uid://xjkvjsa7a7n0" path="res://Assets/Entities/Bills/fiveUp.png" id="6_fs8ht"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lrbkt"]
 animations = [{
@@ -24,14 +25,22 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("6_fs8ht")
+}],
+"loop": false,
+"name": &"five",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("1_okp0y")
 }, {
 "duration": 1.0,
 "texture": ExtResource("2_jl5vg")
 }],
-"loop": true,
-"name": &"dollar",
-"speed": 5.0
+"loop": false,
+"name": &"one",
+"speed": 0.0
 }]
 
 [node name="Bill" type="Node2D"]
@@ -47,6 +56,4 @@ frame_progress = 1.0
 [node name="Bill2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_nuj4u")
-animation = &"dollar"
-frame = 1
-frame_progress = 0.619063
+animation = &"one"

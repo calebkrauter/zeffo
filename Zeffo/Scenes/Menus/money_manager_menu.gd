@@ -47,7 +47,7 @@ func _on_arrow_left_pressed():
 	Util.bills[Util.curBillIndex].isSelected = true
 	if selectBtnPressed:
 		move_selected_bill(selectedBillIndex, Util.curBillIndex)
-	print(Util.bills[Util.curBillIndex].denomination)
+	#print(Util.bills[Util.curBillIndex].denomination)
 
 func _on_arrow_right_pressed():
 	unselect_cur_bill()
@@ -60,7 +60,7 @@ func _on_arrow_right_pressed():
 	Util.bills[Util.curBillIndex].isSelected = true
 	if selectBtnPressed:
 		move_selected_bill(selectedBillIndex, Util.curBillIndex)
-	print(Util.bills[Util.curBillIndex].denomination)
+	#print(Util.bills[Util.curBillIndex].denomination)
 
 func _on_count_pressed():
 	pass # Replace with function body.
@@ -85,15 +85,11 @@ func unselect_cur_bill():
 # Duplicate didn't seem to help.
 func move_selected_bill(selectedBillIndex, targetIndex):
 	var tempBill = Util.bills[targetIndex]
-	var selectedBillDenomination = Util.bills[selectedBillIndex].denomination
-	var tempBillDenomination = Util.bills[targetIndex].denomination
-	print(tempBillDenomination)
-	if Util.bills[selectedBillIndex].isSelected:
-		Util.bills[targetIndex] = (Util.bills[selectedBillIndex]) 
-
-		Util.bills[targetIndex].set_val(selectedBillDenomination)
-		Util.bills[selectedBillIndex].denomination = tempBillDenomination
-		Util.bills[selectedBillIndex] = tempBill
-	Util.bills[selectedBillIndex].set_val(tempBillDenomination)
-	print(Util.bills[selectedBillIndex].denomination)
+	var selectedBillDenomination = Util.bills[selectedBillIndex].get_denomination()
+	var tempBillDenomination = Util.bills[targetIndex].get_denomination()
+	#print(tempBillDenomination)
+	if selectBtnPressed:
+		Util.bills[targetIndex].set_denomination(selectedBillDenomination)
+		Util.bills[selectedBillIndex].set_denomination(tempBillDenomination)
+		print(Util.bills[selectedBillIndex].get_denomination())
 
