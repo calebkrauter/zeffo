@@ -5,7 +5,7 @@ var isSelected = false
 var isFlipped = false
 var heads = true
 var isBundled = false
-var denomination = "1"
+var denomination
 
 
 func set_denomination(denomination_in):

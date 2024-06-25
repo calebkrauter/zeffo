@@ -33,4 +33,5 @@ func gen_bills(quantity):
 		else:
 			#Util.bills[i].denomination = 5
 			Util.bills[i].get_node("Bill2D").play("5")
+			Util.bills[i].set_flipped(false)
 			Util.bills[i].set_denomination("5")

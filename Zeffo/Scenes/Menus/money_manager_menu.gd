@@ -14,10 +14,10 @@ func _process(delta):
 	Util.is_in_bill_array_bounds()
 	select_cur_bill()
 	update_bill_scale()
-	if !selectBtnPressed:
-		flipBtnPressed = false
-	flip(Util.bills[Util.curBillIndex])
-			
+	if selectBtnPressed:
+		for n in Util.billQuantity:
+			flip(Util.bills[n])
+
 
 
 func update_bill_scale():
@@ -28,29 +28,23 @@ func update_bill_scale():
 
 
 func _on_select_pressed():
+	#selectBtnPressed = true
 	if !selectBtnPressed:
 		selectBtnPressed = true
 		Util.bills[Util.curBillIndex].isSelected = true
 	else:
 		selectBtnPressed = false
 		Util.bills[Util.curBillIndex].isSelected = false
-	
-	#if Util.bills[Util.curBillIndex].isSelected:
-		#Util.bills[Util.curBillIndex].isSelected = false
-	#else:
-		#Util.bills[Util.curBillIndex].isSelected = true
 	select_cur_bill()
-	#print(Util.bills[Util.curBillIndex].denomination)
+
 
 
 
 func _on_arrow_left_pressed():
 	arrow_pressed(-1)
-	#print(Util.bills[Util.curBillIndex].denomination)
 
 func _on_arrow_right_pressed():
 	arrow_pressed(1)
-	#print(Util.bills[Util.curBillIndex].denomination)
 
 func arrow_pressed(multiplicative):
 	unselect_cur_bill()
@@ -62,8 +56,8 @@ func arrow_pressed(multiplicative):
 	Util.is_in_bill_array_bounds()
 	Util.bills[Util.curBillIndex].isSelected = true
 	if selectBtnPressed:
-		move_selected_bill(selectedBillIndex, Util.curBillIndex)
-		#Util.bills[Util.curBillIndex].get_node("Bill2D").frame = 1
+		var curBillIndex = Util.curBillIndex
+		move_selected_bill(selectedBillIndex, curBillIndex)
 
 func _on_count_pressed():
 	pass # Replace with function body.
@@ -71,24 +65,23 @@ func _on_count_pressed():
 
 func _on_flip_pressed():
 	flipBtnPressed = true
+	
 	var curBill = Util.bills[Util.curBillIndex]
 	if curBill.get_node("Bill2D").get_frame() == 0:
-		#curBill.set_flipped(false)
 		curBill.get_node("Bill2D").frame = 1
-		curBill.heads = true
+		curBill.set_flipped(true)
 	else:
-		#curBill.set_flipped(true)
 		curBill.get_node("Bill2D").frame = 0
-		curBill.heads = false
-	
+		curBill.set_flipped(false)
+
 
 
 func flip(curBill):
-	if selectBtnPressed && flipBtnPressed:
-		if curBill.heads:
-			curBill.get_node("Bill2D").frame = 1
-		else:
-			curBill.get_node("Bill2D").frame = 0
+	
+	if curBill.is_flipped():
+		curBill.get_node("Bill2D").frame = 1
+	else:
+		curBill.get_node("Bill2D").frame = 0
 
 
 func flip_heads(curBill):
@@ -110,28 +103,31 @@ func unselect_cur_bill():
 
 func move_selected_bill(selectedBillIndex, targetIndex):
 	var selectedBillDenomination = Util.bills[selectedBillIndex].get_denomination()
-	var selectedBillIsFlipped = Util.bills[selectedBillIndex].is_flipped()
-	var tempBillDenomination = Util.bills[targetIndex].get_denomination()
-	var tempBillFlipped = Util.bills[targetIndex].is_flipped()
-	if selectBtnPressed:
-		Util.bills[targetIndex].set_denomination(selectedBillDenomination)
-		Util.bills[targetIndex].set_flipped(selectedBillIsFlipped)
-		Util.bills[selectedBillIndex].set_denomination(tempBillDenomination)
-		Util.bills[selectedBillIndex].set_flipped(tempBillFlipped)
-		if Util.bills[selectedBillIndex].heads:
-			flip_tails(Util.bills[selectedBillIndex])
-		#if Util.bills[selectedBillIndex].heads == false:
-			#flip_tails(Util.bills[targetIndex])
-		#if Util.bills[targetIndex].is_flipped() && !Util.bills[selectedBillIndex].is_flipped():
-			#flip_tails(Util.bills[targetIndex])
-			
-		#else:
-			#flip_heads(Util.bills[selectedBillIndex])
-		#if flipBtnPressed && Util.bills[targetIndex].is_flipped():
-			#flip(Util.bills[selectedBillIndex])
-		#else:
-			
-		#if Util.bills[targetIndex].is_flipped():
-			#flip_heads(Util.bills[targetIndex])
-		#flip(Util.bills[selectedBillIndex])
+	var targetBillDenomination = Util.bills[targetIndex].get_denomination()
+	
+
+	#print(selectedBillIndex)
+	#print(Util.curBillIndex)
+	print("AHHHH")
+	Util.bills[targetIndex].set_denomination(selectedBillDenomination)
+	Util.bills[selectedBillIndex].set_denomination(targetBillDenomination)
+	if !Util.bills[selectedBillIndex].is_flipped() && !Util.bills[targetIndex].is_flipped():
+		Util.bills[targetIndex].set_flipped(false)
+		Util.bills[selectedBillIndex].set_flipped(false)
+		print(1)
+	elif Util.bills[selectedBillIndex].is_flipped() && !Util.bills[targetIndex].is_flipped():
+		Util.bills[targetIndex].set_flipped(true)
+		Util.bills[selectedBillIndex].set_flipped(false)
+		flip(Util.bills[selectedBillIndex])
+		print(2)
+	elif !Util.bills[selectedBillIndex].is_flipped() && Util.bills[targetIndex].is_flipped():
+		Util.bills[targetIndex].set_flipped(false)
+		Util.bills[selectedBillIndex].set_flipped(true)
+		flip(Util.bills[selectedBillIndex])
+		print(3)
+	elif Util.bills[selectedBillIndex].is_flipped() && Util.bills[targetIndex].is_flipped():
+		Util.bills[targetIndex].set_flipped(true)
+		Util.bills[selectedBillIndex].set_flipped(true)
+		print(4)
+
 	
