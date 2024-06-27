@@ -1,9 +1,12 @@
 extends Node2D
 var paused = false
 var bills = []
-var billQuantity = 10
-var curBillIndex = billQuantity/2 + 1
+var billQuantity = 30
+var billsInView = []
+var viewBillsQuantity = 10
+var curBillIndex = 5
 var totalCash = 0
+var billMarginX = 100
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

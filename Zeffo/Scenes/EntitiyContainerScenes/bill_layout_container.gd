@@ -20,7 +20,7 @@ func gen_bills(quantity):
 	for i in quantity:
 		newBill = bill.instantiate()
 		bills.add_child(newBill)
-		newBill.position.x += originPosX + i * 100
+		newBill.position.x += originPosX + i * Util.billMarginX
 		newBill.position.y = originPosY
 		Util.bills.append(newBill)
 		

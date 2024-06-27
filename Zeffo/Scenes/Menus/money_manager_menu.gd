@@ -42,9 +42,10 @@ func _on_select_pressed():
 
 func _on_arrow_left_pressed():
 	arrow_pressed(-1)
-
+	slide_bills_right()
 func _on_arrow_right_pressed():
 	arrow_pressed(1)
+	slide_bills_left()
 
 func arrow_pressed(multiplicative):
 	unselect_cur_bill()
@@ -59,6 +60,20 @@ func arrow_pressed(multiplicative):
 		var curBillIndex = Util.curBillIndex
 		move_selected_bill(selectedBillIndex, curBillIndex)
 
+var newBoundR = 10
+var newBoundL = 0
+func slide_bills_left():
+	if Util.curBillIndex < Util.billQuantity - 1:
+		if Util.curBillIndex > newBoundR: #&& Util.curBillIndex > 9 && Util.curBillIndex != Util.billQuantity-1:
+			for n in Util.billQuantity:
+				Util.bills[n].position.x -= Util.billMarginX
+				newBoundL = Util.curBillIndex - 10
+func slide_bills_right():
+	if Util.curBillIndex > 0:
+		if Util.curBillIndex < newBoundL:# && Util.curBillIndex < Util.billQuantity - 10 && Util.curBillIndex != 0:
+			for n in Util.billQuantity:
+				Util.bills[n].position.x += Util.billMarginX
+				newBoundR = Util.curBillIndex + 10
 func _on_count_pressed():
 	pass # Replace with function body.
 
