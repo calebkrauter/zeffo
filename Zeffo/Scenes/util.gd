@@ -1,7 +1,7 @@
 extends Node2D
 var paused = false
 var bills = []
-var billQuantity = 30
+var billQuantity = 29
 var billsInView = []
 var viewBillsQuantity = 10
 var curBillIndex = 5
