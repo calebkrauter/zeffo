@@ -3,8 +3,7 @@ extends Control
 var selectedBillIndex
 var selectBtnPressed = false
 var flipBtnPressed = false
-var newBoundR = 10
-var newBoundL = 0
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,9 +19,9 @@ func _process(delta):
 		for n in Util.billQuantity:
 			flip(Util.bills[n])
 	if Util.curBillIndex >= Util.billQuantity-1:
-		newBoundL = Util.billQuantity - 10
+		Util.newBoundL = Util.billQuantity - 11
 	if Util.curBillIndex <= 0:
-		newBoundR = 10
+		Util.newBoundR = 10
 
 
 
@@ -54,8 +53,8 @@ func _on_arrow_right_pressed():
 	slide_bills_left()
 
 func arrow_pressed(multiplicative):
-	print ("NewBoundR ", newBoundR)
-	print ("NewBoundL ", newBoundL)
+	print ("NewBoundR ", Util.newBoundR)
+	print ("NewBoundL ", Util.newBoundL)
 	unselect_cur_bill()
 	selectedBillIndex = Util.curBillIndex
 	Util.bills[selectedBillIndex].isSelected = false
@@ -70,19 +69,19 @@ func arrow_pressed(multiplicative):
 
 func slide_bills_left():
 	if Util.curBillIndex >= Util.billQuantity-1:
-		newBoundR = Util.billQuantity-1
+		Util.newBoundR = Util.billQuantity-1
 		
-	if Util.curBillIndex > newBoundR: #&& Util.curBillIndex > 9 && Util.curBillIndex != Util.billQuantity-1:
+	if Util.curBillIndex > Util.newBoundR: #&& Util.curBillIndex > 9 && Util.curBillIndex != Util.billQuantity-1:
 		for n in Util.billQuantity:
 			Util.bills[n].position.x -= Util.billMarginX
-			newBoundL = Util.curBillIndex - 9
+			Util.newBoundL = Util.curBillIndex - 9
 func slide_bills_right():
 	if Util.curBillIndex <= 0:
-		newBoundL = 0
-	if Util.curBillIndex < newBoundL:# && Util.curBillIndex < Util.billQuantity - 10 && Util.curBillIndex != 0:
+		Util.newBoundL = 0
+	if Util.curBillIndex < Util.newBoundL:# && Util.curBillIndex < Util.billQuantity - 10 && Util.curBillIndex != 0:
 		for n in Util.billQuantity:
 			Util.bills[n].position.x += Util.billMarginX
-			newBoundR = Util.curBillIndex + 9
+			Util.newBoundR = Util.curBillIndex + 9
 func _on_count_pressed():
 	pass # Replace with function body.
 
