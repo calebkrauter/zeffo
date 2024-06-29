@@ -3,6 +3,8 @@ extends Control
 var selectedBillIndex
 var selectBtnPressed = false
 var flipBtnPressed = false
+var newBoundR = 10
+var newBoundL = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -52,6 +54,8 @@ func _on_arrow_right_pressed():
 	slide_bills_left()
 
 func arrow_pressed(multiplicative):
+	print ("NewBoundR ", newBoundR)
+	print ("NewBoundL ", newBoundL)
 	unselect_cur_bill()
 	selectedBillIndex = Util.curBillIndex
 	Util.bills[selectedBillIndex].isSelected = false
@@ -64,23 +68,21 @@ func arrow_pressed(multiplicative):
 		var curBillIndex = Util.curBillIndex
 		move_selected_bill(selectedBillIndex, curBillIndex)
 
-var newBoundR = 10
-var newBoundL = 0
 func slide_bills_left():
-	if Util.curBillIndex == Util.billQuantity - 1:
-		return
-	if !Util.curBillIndex >= Util.billQuantity - 1:
-		if Util.curBillIndex > newBoundR: #&& Util.curBillIndex > 9 && Util.curBillIndex != Util.billQuantity-1:
-			for n in Util.billQuantity:
-				Util.bills[n].position.x -= Util.billMarginX
-				newBoundL = Util.curBillIndex - 10
+	if Util.curBillIndex >= Util.billQuantity-1:
+		newBoundR = Util.billQuantity-1
+		
+	if Util.curBillIndex > newBoundR: #&& Util.curBillIndex > 9 && Util.curBillIndex != Util.billQuantity-1:
+		for n in Util.billQuantity:
+			Util.bills[n].position.x -= Util.billMarginX
+			newBoundL = Util.curBillIndex - 9
 func slide_bills_right():
-
-	if Util.curBillIndex > 0:
-		if Util.curBillIndex < newBoundL:# && Util.curBillIndex < Util.billQuantity - 10 && Util.curBillIndex != 0:
-			for n in Util.billQuantity:
-				Util.bills[n].position.x += Util.billMarginX
-				newBoundR = Util.curBillIndex + 10
+	if Util.curBillIndex <= 0:
+		newBoundL = 0
+	if Util.curBillIndex < newBoundL:# && Util.curBillIndex < Util.billQuantity - 10 && Util.curBillIndex != 0:
+		for n in Util.billQuantity:
+			Util.bills[n].position.x += Util.billMarginX
+			newBoundR = Util.curBillIndex + 9
 func _on_count_pressed():
 	pass # Replace with function body.
 
@@ -130,26 +132,26 @@ func move_selected_bill(selectedBillIndex, targetIndex):
 
 	#print(selectedBillIndex)
 	#print(Util.curBillIndex)
-	print("AHHHH")
+	#print("AHHHH")
 	Util.bills[targetIndex].set_denomination(selectedBillDenomination)
 	Util.bills[selectedBillIndex].set_denomination(targetBillDenomination)
 	if !Util.bills[selectedBillIndex].is_flipped() && !Util.bills[targetIndex].is_flipped():
 		Util.bills[targetIndex].set_flipped(false)
 		Util.bills[selectedBillIndex].set_flipped(false)
-		print(1)
+		#print(1)
 	elif Util.bills[selectedBillIndex].is_flipped() && !Util.bills[targetIndex].is_flipped():
 		Util.bills[targetIndex].set_flipped(true)
 		Util.bills[selectedBillIndex].set_flipped(false)
 		flip(Util.bills[selectedBillIndex])
-		print(2)
+		#print(2)
 	elif !Util.bills[selectedBillIndex].is_flipped() && Util.bills[targetIndex].is_flipped():
 		Util.bills[targetIndex].set_flipped(false)
 		Util.bills[selectedBillIndex].set_flipped(true)
 		flip(Util.bills[selectedBillIndex])
-		print(3)
+		#print(3)
 	elif Util.bills[selectedBillIndex].is_flipped() && Util.bills[targetIndex].is_flipped():
 		Util.bills[targetIndex].set_flipped(true)
 		Util.bills[selectedBillIndex].set_flipped(true)
-		print(4)
+		#print(4)
 
 	

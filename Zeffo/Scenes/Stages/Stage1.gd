@@ -11,7 +11,7 @@ func _ready():
 	var cashTotalVal
 	for i in Util.billQuantity:
 		Util.totalCash += int(Util.bills[i].get_denomination())
-		print(Util.bills[i].get_denomination())
+		#print(Util.bills[i].get_denomination())
 	cashTotalVal = str(Util.totalCash)
 	cash_total.text = "Cash Total Verification: " + cashTotalVal
 # Called every frame. 'delta' is the elapsed time since the previous frame.
