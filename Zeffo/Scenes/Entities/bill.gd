@@ -6,6 +6,7 @@ var isFlipped = false
 var heads = true
 var isBundled = false
 var denomination
+@onready var indexLabel = $IndexLabel
 
 
 func set_denomination(denomination_in):

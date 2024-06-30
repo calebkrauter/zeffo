@@ -39,22 +39,21 @@ func gen_bills(quantity):
 	var originPosX = 25
 	var originPosY = 250
 
-	for i in quantity:
+	for n in quantity:
 		newBill = bill.instantiate()
-		
 		bills.add_child(newBill)
-		newBill.position.x += originPosX + i * Util.billMarginX
+		newBill.position.x += originPosX + n * Util.billMarginX
 		newBill.position.y = originPosY
 		Util.bills.append(newBill)
+		Util.indeciesDisplayed.append(n+1)
+		
 		
 #Temp assign diff values to some bills to ensure selection works proprerly.
-		if i % 2 == 0:
-			#Util.bills[i].denomination = 1
-			Util.bills[i].get_node("Bill2D").play("1")
-			Util.bills[i].set_flipped(false)
-			Util.bills[i].set_denomination("1")
+		if n % 2 == 0:
+			Util.bills[n].get_node("Bill2D").play("1")
+			Util.bills[n].set_flipped(false)
+			Util.bills[n].set_denomination("1")
 		else:
-			#Util.bills[i].denomination = 5
-			Util.bills[i].get_node("Bill2D").play("5")
-			Util.bills[i].set_flipped(false)
-			Util.bills[i].set_denomination("5")
+			Util.bills[n].get_node("Bill2D").play("5")
+			Util.bills[n].set_flipped(false)
+			Util.bills[n].set_denomination("5")

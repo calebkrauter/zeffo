@@ -22,6 +22,8 @@ func _process(delta):
 		Util.newBoundL = Util.billQuantity - 11
 	if Util.curBillIndex <= 0:
 		Util.newBoundR = 10
+	for n in Util.billQuantity:
+		Util.bills[n].get_node("IndexLabel").text = str(Util.indeciesDisplayed[n])
 
 
 
