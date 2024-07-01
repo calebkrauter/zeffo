@@ -10,7 +10,7 @@ var flipBtnPressed = false
 @onready var flipBtn = $Flip
 @onready var bundleBtn = $Bundle
 @onready var controls = [arrowRightBtn, selectBtn, arrowLeftBtn, countBtn, flipBtn, bundleBtn]
-
+var slideOffset = Util.bundledQuantity
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -39,13 +39,11 @@ func controls_disabled(isDisabled):
 	for n in controls.size():
 		controls[n].disabled = isDisabled
 
-
 func update_bill_scale():
 	if Util.bills[Util.curBillIndex].isSelected && selectBtnPressed:
 		Util.bills[Util.curBillIndex].get_node("Bill2D").scale = Vector2(0.38, 0.38)
 	else:
 		Util.bills[Util.curBillIndex].get_node("Bill2D").scale = Vector2(0.4, 0.4)
-
 
 func _on_select_pressed():
 	#selectBtnPressed = true
@@ -57,9 +55,6 @@ func _on_select_pressed():
 		Util.bills[Util.curBillIndex].isSelected = false
 	select_cur_bill()
 
-
-
-
 func _on_arrow_left_pressed():
 	arrow_pressed(-1)
 	slide_bills_right()
@@ -68,8 +63,6 @@ func _on_arrow_right_pressed():
 	slide_bills_left()
 
 func arrow_pressed(multiplicative):
-	print ("NewBoundR ", Util.newBoundR)
-	print ("NewBoundL ", Util.newBoundL)
 	unselect_cur_bill()
 	selectedBillIndex = Util.curBillIndex
 	Util.bills[selectedBillIndex].isSelected = false
@@ -97,9 +90,9 @@ func slide_bills_right():
 		for n in Util.billQuantity:
 			Util.bills[n].position.x += Util.billMarginX
 			Util.newBoundR = Util.curBillIndex + 9
-func _on_count_pressed():
-	pass # Replace with function body.
 
+func _on_count_pressed():
+	pass
 
 func _on_flip_pressed():
 	flipBtnPressed = true
@@ -111,33 +104,40 @@ func _on_flip_pressed():
 		curBill.get_node("Bill2D").frame = 0
 		curBill.set_flipped(false)
 
-
-
 func flip(curBill):
-	
 	if curBill.is_flipped():
 		curBill.get_node("Bill2D").frame = 1
 	else:
 		curBill.get_node("Bill2D").frame = 0
 
-
 func flip_heads(curBill):
 	curBill.get_node("Bill2D").frame = 1
-	#curBill.set_flipped(true)
 
 func flip_tails(curBill):
 	curBill.get_node("Bill2D").frame = 0
-	#curBill.set_flipped(false)
-	
+
 func _on_bundle_pressed():
 	if !Util.bills.is_empty():
-		for n in Util.billQuantity:
-			Util.bills[n].position.x -= Util.billMarginX * Util.bundledQuantity
-			Util.newBoundL = Util.curBillIndex - 9
+		if Util.curBillIndex >= Util.bundledQuantity - 1:
+			Util.bills[Util.curBillIndex].isSelected = false
+			Util.curBillIndex = Util.curBillIndex - slideOffset
+			Util.is_in_bill_array_bounds()
+			Util.bills[Util.curBillIndex].isSelected = true
+			# This only works for index selected at 30
+			# TODO fix issue where sometimes bills slide to far and sometimes the wrong bill where the movable selector is.
+			slideOffset = 11
+		else:
+			slideOffset = Util.bundledQuantity
 		for n in Util.bundledQuantity:
+			if n >= Util.bills.size():
+				break
 			Util.bills[0].hide()
 			Util.bills.remove_at(0)
-
+		if Util.bills.size() < Util.bundledQuantity:
+			slideOffset = Util.bills.size()
+		for n in Util.bills.size():
+			Util.bills[n].position.x -= Util.billMarginX * slideOffset
+			Util.newBoundL = Util.curBillIndex - 9
 
 func select_cur_bill():
 	Util.bills[Util.curBillIndex].get_node("BillSelect").show()
@@ -149,29 +149,19 @@ func move_selected_bill(selectedBillIndex, targetIndex):
 	var selectedBillDenomination = Util.bills[selectedBillIndex].get_denomination()
 	var targetBillDenomination = Util.bills[targetIndex].get_denomination()
 	
-
-	#print(selectedBillIndex)
-	#print(Util.curBillIndex)
-	#print("AHHHH")
 	Util.bills[targetIndex].set_denomination(selectedBillDenomination)
 	Util.bills[selectedBillIndex].set_denomination(targetBillDenomination)
 	if !Util.bills[selectedBillIndex].is_flipped() && !Util.bills[targetIndex].is_flipped():
 		Util.bills[targetIndex].set_flipped(false)
 		Util.bills[selectedBillIndex].set_flipped(false)
-		#print(1)
 	elif Util.bills[selectedBillIndex].is_flipped() && !Util.bills[targetIndex].is_flipped():
 		Util.bills[targetIndex].set_flipped(true)
 		Util.bills[selectedBillIndex].set_flipped(false)
 		flip(Util.bills[selectedBillIndex])
-		#print(2)
 	elif !Util.bills[selectedBillIndex].is_flipped() && Util.bills[targetIndex].is_flipped():
 		Util.bills[targetIndex].set_flipped(false)
 		Util.bills[selectedBillIndex].set_flipped(true)
 		flip(Util.bills[selectedBillIndex])
-		#print(3)
 	elif Util.bills[selectedBillIndex].is_flipped() && Util.bills[targetIndex].is_flipped():
 		Util.bills[targetIndex].set_flipped(true)
 		Util.bills[selectedBillIndex].set_flipped(true)
-		#print(4)
-
-	

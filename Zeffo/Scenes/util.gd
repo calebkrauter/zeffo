@@ -1,7 +1,7 @@
 extends Node2D
 var paused = false
 var bills = []
-var billQuantity = 60
+var billQuantity = 110
 var bundledQuantity = 30
 var frameL = curBillIndex
 var frameR = curBillIndex
