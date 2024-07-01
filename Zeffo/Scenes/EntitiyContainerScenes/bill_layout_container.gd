@@ -11,18 +11,16 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	Util.frameL = Util.curBillIndex -10
-	Util.frameR = Util.curBillIndex +10
-	if Util.frameL <=0:
-		Util.frameL = 0
-	if Util.frameR >= Util.billQuantity -1:
-		Util.frameR = Util.billQuantity -1
-	for n in Util.billQuantity:
-		if billLayoutContainer.is_ancestor_of(Util.bills[n]):
-			is_out_of_frame(n)
-		#else:
-			
-		
+	if !Util.bills.is_empty():
+		Util.frameL = Util.curBillIndex -10
+		Util.frameR = Util.curBillIndex +10
+		if Util.frameL <=0:
+			Util.frameL = 0
+		if Util.frameR >= Util.billQuantity -1:
+			Util.frameR = Util.billQuantity -1
+		for n in Util.billQuantity:
+			if billLayoutContainer.is_ancestor_of(Util.bills[n]):
+				is_out_of_frame(n)
 
 func is_out_of_frame(n):
 	if n < Util.frameL:

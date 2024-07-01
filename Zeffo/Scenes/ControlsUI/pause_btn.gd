@@ -30,5 +30,6 @@ func change_game_state():
 		pause_menu_container.hide()
 		money_manager_control.show()
 		bills_control.show()
-		Util.bills[Util.curBillIndex].get_node("BillSelect").show()
+		if !Util.bills.is_empty():
+			Util.bills[Util.curBillIndex].get_node("BillSelect").show()
 		Engine.time_scale = 1

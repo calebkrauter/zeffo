@@ -3,7 +3,13 @@ extends Control
 var selectedBillIndex
 var selectBtnPressed = false
 var flipBtnPressed = false
-
+@onready var arrowRightBtn = $ArrowRight
+@onready var selectBtn = $Select
+@onready var arrowLeftBtn = $ArrowLeft
+@onready var countBtn = $Count
+@onready var flipBtn = $Flip
+@onready var bundleBtn = $Bundle
+@onready var controls = [arrowRightBtn, selectBtn, arrowLeftBtn, countBtn, flipBtn, bundleBtn]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,19 +18,26 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	Util.is_in_bill_array_bounds()
-	select_cur_bill()
-	update_bill_scale()
-	if selectBtnPressed:
+	if !Util.bills.is_empty():
+		controls_disabled(false)
+		Util.is_in_bill_array_bounds()
+		select_cur_bill()
+		update_bill_scale()
+		if selectBtnPressed:
+			for n in Util.billQuantity:
+				flip(Util.bills[n])
+		if Util.curBillIndex >= Util.billQuantity-1:
+			Util.newBoundL = Util.billQuantity - 11
+		if Util.curBillIndex <= 0:
+			Util.newBoundR = 10
 		for n in Util.billQuantity:
-			flip(Util.bills[n])
-	if Util.curBillIndex >= Util.billQuantity-1:
-		Util.newBoundL = Util.billQuantity - 11
-	if Util.curBillIndex <= 0:
-		Util.newBoundR = 10
-	for n in Util.billQuantity:
-		Util.bills[n].get_node("IndexLabel").text = str(Util.indeciesDisplayed[n])
+			Util.bills[n].get_node("IndexLabel").text = str(Util.indeciesDisplayed[n])
+	else:
+		controls_disabled(true)
 
+func controls_disabled(isDisabled):
+	for n in controls.size():
+		controls[n].disabled = isDisabled
 
 
 func update_bill_scale():
@@ -90,7 +103,6 @@ func _on_count_pressed():
 
 func _on_flip_pressed():
 	flipBtnPressed = true
-	
 	var curBill = Util.bills[Util.curBillIndex]
 	if curBill.get_node("Bill2D").get_frame() == 0:
 		curBill.get_node("Bill2D").frame = 1
@@ -118,7 +130,14 @@ func flip_tails(curBill):
 	#curBill.set_flipped(false)
 	
 func _on_bundle_pressed():
-	pass # Replace with function body.
+	if !Util.bills.is_empty():
+		for n in Util.billQuantity:
+			Util.bills[n].position.x -= Util.billMarginX * Util.bundledQuantity
+			Util.newBoundL = Util.curBillIndex - 9
+		for n in Util.bundledQuantity:
+			Util.bills[0].hide()
+			Util.bills.remove_at(0)
+
 
 func select_cur_bill():
 	Util.bills[Util.curBillIndex].get_node("BillSelect").show()

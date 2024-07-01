@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dksds5ronvrwb"]
+
+[ext_resource type="Script" path="res://Scenes/Entities/bundle.gd" id="1_36qnl"]
+[ext_resource type="Texture2D" path="res://Assets/Entities/Bills/bundle.png" id="1_mpmf1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nr7wj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_mpmf1")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[node name="Bundle" type="Node2D"]
+script = ExtResource("1_36qnl")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nr7wj")
