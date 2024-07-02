@@ -12,7 +12,8 @@ var flipBtnPressed = false
 @onready var controls = [arrowRightBtn, selectBtn, arrowLeftBtn, countBtn, flipBtn, bundleBtn]
 var slideOffset = Util.bundledQuantity
 #const SELECTOR_CAMERA = preload("res://Scenes/Entities/selectorCamera.tscn")
-@onready var selector = $"../../Selector"
+#@onready var selector = $"../../Selector"
+@onready var selector = $"../../.."
 
 
 # Called when the node enters the scene tree for the first time.

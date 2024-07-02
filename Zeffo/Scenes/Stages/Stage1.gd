@@ -2,8 +2,10 @@ extends Node2D
 const BILL_LAYOUT_CONTAINER = preload("res://Scenes/EntitiyContainerScenes/bill_layout_container.tscn")
 
 # Called when the node enters the scene tree for the first time.
-@onready var cash_total = $CashTotal
+#@onready var cash_total = $CashTotal
 @onready var bills = $BillsFrame/BillsControl
+
+@onready var cash_total = $Selector/SelectorSprite/CashTotal
 
 
 # Called when the node enters the scene tree for the first time.
