@@ -11,6 +11,10 @@ var flipBtnPressed = false
 @onready var bundleBtn = $Bundle
 @onready var controls = [arrowRightBtn, selectBtn, arrowLeftBtn, countBtn, flipBtn, bundleBtn]
 var slideOffset = Util.bundledQuantity
+#const SELECTOR_CAMERA = preload("res://Scenes/Entities/selectorCamera.tscn")
+@onready var selector = $"../../Selector"
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -74,6 +78,8 @@ func arrow_pressed(multiplicative):
 	if selectBtnPressed:
 		var curBillIndex = Util.curBillIndex
 		move_selected_bill(selectedBillIndex, curBillIndex)
+	selector.get_node("SelectorSprite").position.x += Util.billMarginX * multiplicative
+	
 
 func slide_bills_left():
 	if Util.curBillIndex >= Util.billQuantity-1:

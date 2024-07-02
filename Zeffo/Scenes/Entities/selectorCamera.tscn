@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://bj7qyshfx0n7b"]
+
+[ext_resource type="Texture2D" uid="uid://cji2i37nx2q3f" path="res://Assets/Entities/BillManagementUI/BillEnhance/billSelect1.png" id="1_jfskn"]
+[ext_resource type="Script" path="res://Scenes/Entities/selectorCamera.gd" id="1_wwqw8"]
+[ext_resource type="Texture2D" uid="uid://cypv1pg5fsmr2" path="res://Assets/Entities/BillManagementUI/BillEnhance/billSelect2.png" id="2_lkrat"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oaarr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jfskn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_lkrat")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[node name="Selector" type="Node2D"]
+script = ExtResource("1_wwqw8")
+
+[node name="SelectorSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_oaarr")
+
+[node name="SelectorCam" type="Camera2D" parent="SelectorSprite"]
