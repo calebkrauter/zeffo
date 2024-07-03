@@ -62,11 +62,12 @@ func _on_select_pressed():
 
 func _on_arrow_left_pressed():
 	arrow_pressed(-1)
-	slide_bills_right()
+	#slide_bills_right()
 func _on_arrow_right_pressed():
 	arrow_pressed(1)
-	slide_bills_left()
+	#slide_bills_left()
 
+var hitBound = false
 func arrow_pressed(multiplicative):
 	unselect_cur_bill()
 	selectedBillIndex = Util.curBillIndex
@@ -79,24 +80,40 @@ func arrow_pressed(multiplicative):
 	if selectBtnPressed:
 		var curBillIndex = Util.curBillIndex
 		move_selected_bill(selectedBillIndex, curBillIndex)
-	selector.get_node("SelectorSprite").position.x += Util.billMarginX * multiplicative
 	
+	if Util.curBillIndex > 0 && Util.curBillIndex < Util.bills.size() - 1:
+		hitBound = false
+	if Util.curBillIndex >= 0 && Util.curBillIndex <= Util.bills.size() - 1 && !hitBound:
+		if Util.curBillIndex == 0:
+			hitBound = true
+		if Util.curBillIndex == Util.bills.size() - 1:
+			hitBound = true
+		print(Util.curBillIndex)
+		selector.get_node("SelectorSprite").position.x += Util.billMarginX * multiplicative
+	#if Util.curBillIndex <= Util.bills.size() - 1 && multiplicative == -1 && !hitBound:
+		#if Util.curBillIndex == 0:
+			#hitBound = true
+		#print(Util.curBillIndex)
+		#selector.get_node("SelectorSprite").position.x += Util.billMarginX * multiplicative
+	#if Util.curBillIndex < Util.bills.size() -1:
+		#print(Util.curBillIndex)
+		#selector.get_node("SelectorSprite").position.x += Util.billMarginX * multiplicative
 
-func slide_bills_left():
-	if Util.curBillIndex >= Util.billQuantity-1:
-		Util.newBoundR = Util.billQuantity-1
-		
-	if Util.curBillIndex > Util.newBoundR: #&& Util.curBillIndex > 9 && Util.curBillIndex != Util.billQuantity-1:
-		for n in Util.billQuantity:
-			Util.bills[n].position.x -= Util.billMarginX
-			Util.newBoundL = Util.curBillIndex - 9
-func slide_bills_right():
-	if Util.curBillIndex <= 0:
-		Util.newBoundL = 0
-	if Util.curBillIndex < Util.newBoundL:# && Util.curBillIndex < Util.billQuantity - 10 && Util.curBillIndex != 0:
-		for n in Util.billQuantity:
-			Util.bills[n].position.x += Util.billMarginX
-			Util.newBoundR = Util.curBillIndex + 9
+#func slide_bills_left():
+	#if Util.curBillIndex >= Util.billQuantity-1:
+		#Util.newBoundR = Util.billQuantity-1
+		#
+	#if Util.curBillIndex > Util.newBoundR: #&& Util.curBillIndex > 9 && Util.curBillIndex != Util.billQuantity-1:
+		#for n in Util.billQuantity:
+			#Util.bills[n].position.x -= Util.billMarginX
+			#Util.newBoundL = Util.curBillIndex - 9
+#func slide_bills_right():
+	#if Util.curBillIndex <= 0:
+		#Util.newBoundL = 0
+	#if Util.curBillIndex < Util.newBoundL:# && Util.curBillIndex < Util.billQuantity - 10 && Util.curBillIndex != 0:
+		#for n in Util.billQuantity:
+			#Util.bills[n].position.x += Util.billMarginX
+			#Util.newBoundR = Util.curBillIndex + 9
 
 func _on_count_pressed():
 	pass
