@@ -23,14 +23,15 @@ func _process(delta):
 				is_out_of_frame(n)
 
 func is_out_of_frame(n):
-	if n < Util.frameL:
-		Util.bills[n].hide()
-	if n > Util.frameR:
-		Util.bills[n].hide()
-	if n <= Util.frameR && n > Util.frameL:
-		Util.bills[n].show()
-	if n >= Util.frameL && n < Util.frameR:
-		Util.bills[n].show()
+	#if n < Util.frameL:
+		#Util.bills[n].hide()
+	#if n > Util.frameR:
+		#Util.bills[n].hide()
+	#if n <= Util.frameR && n > Util.frameL:
+		#Util.bills[n].show()
+	#if n >= Util.frameL && n < Util.frameR:
+		#Util.bills[n].show()
+	pass
 
 func gen_bills(quantity):
 	var newBill

@@ -89,7 +89,7 @@ func arrow_pressed(multiplicative):
 		if Util.curBillIndex == Util.bills.size() - 1:
 			hitBound = true
 		print(Util.curBillIndex)
-		selector.get_node("SelectorSprite").position.x += Util.billMarginX * multiplicative
+		selector.get_node("SelectorSprite1").position.x += Util.billMarginX * multiplicative
 	#if Util.curBillIndex <= Util.bills.size() - 1 && multiplicative == -1 && !hitBound:
 		#if Util.curBillIndex == 0:
 			#hitBound = true
@@ -164,10 +164,13 @@ func _on_bundle_pressed():
 			Util.newBoundL = Util.curBillIndex - 9
 
 func select_cur_bill():
-	Util.bills[Util.curBillIndex].get_node("BillSelect").show()
+	
+	#Util.bills[Util.curBillIndex].get_node("BillSelect").show()
+	pass
 
 func unselect_cur_bill():
-	Util.bills[Util.curBillIndex].get_node("BillSelect").hide()
+	#Util.bills[Util.curBillIndex].get_node("BillSelect").hide()
+	pass
 
 func move_selected_bill(selectedBillIndex, targetIndex):
 	var selectedBillDenomination = Util.bills[selectedBillIndex].get_denomination()

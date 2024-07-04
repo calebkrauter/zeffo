@@ -5,7 +5,9 @@ const BILL_LAYOUT_CONTAINER = preload("res://Scenes/EntitiyContainerScenes/bill_
 #@onready var cash_total = $CashTotal
 @onready var bills = $BillsFrame/BillsControl
 
-@onready var cash_total = $Selector/SelectorSprite/CashTotal
+@onready var cash_total = $Selector/SelectorSprite1/CashTotal
+#@onready var cash_total = $Selector/CashTotal
+#@onready var cash_total = $SelectorSprite1/CashTotal
 
 
 # Called when the node enters the scene tree for the first time.

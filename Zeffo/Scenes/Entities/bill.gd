@@ -22,7 +22,8 @@ func is_flipped():
 	return self.isFlipped
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	bill_Select.hide()
+	#bill_Select.hide()
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
