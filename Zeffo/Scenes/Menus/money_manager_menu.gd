@@ -46,8 +46,10 @@ func controls_disabled(isDisabled):
 
 func update_bill_scale():
 	if Util.bills[Util.curBillIndex].isSelected && selectBtnPressed:
+		selector.get_node("CameraContainer/Selector2D").scale = Vector2(0.38, 0.38)
 		Util.bills[Util.curBillIndex].get_node("Bill2D").scale = Vector2(0.38, 0.38)
 	else:
+		selector.get_node("CameraContainer/Selector2D").scale = Vector2(0.4, 0.4)
 		Util.bills[Util.curBillIndex].get_node("Bill2D").scale = Vector2(0.4, 0.4)
 
 func _on_select_pressed():
@@ -89,7 +91,7 @@ func arrow_pressed(multiplicative):
 		if Util.curBillIndex == Util.bills.size() - 1:
 			hitBound = true
 		print(Util.curBillIndex)
-		selector.get_node("SelectorSprite1").position.x += Util.billMarginX * multiplicative
+		selector.position.x += Util.billMarginX * multiplicative
 	#if Util.curBillIndex <= Util.bills.size() - 1 && multiplicative == -1 && !hitBound:
 		#if Util.curBillIndex == 0:
 			#hitBound = true

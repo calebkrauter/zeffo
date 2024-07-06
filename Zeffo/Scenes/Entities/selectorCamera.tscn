@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bj7qyshfx0n7b"]
+[gd_scene load_steps=7 format=3 uid="uid://bj7qyshfx0n7b"]
 
 [ext_resource type="Texture2D" uid="uid://cji2i37nx2q3f" path="res://Assets/Entities/BillManagementUI/BillEnhance/billSelect1.png" id="1_jfskn"]
 [ext_resource type="Texture2D" uid="uid://cypv1pg5fsmr2" path="res://Assets/Entities/BillManagementUI/BillEnhance/billSelect2.png" id="2_lkrat"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://b4x7kejgosoke" path="res://Scenes/ControlsUI/pause_btn.tscn" id="5_1e4y7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_skcqn"]
+animations = []
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q4frx"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -14,17 +17,23 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_lkrat")
 }],
-"loop": false,
+"loop": true,
 "name": &"default",
-"speed": 0.0
+"speed": 5.0
 }]
 
 [node name="Selector" type="Node2D"]
 
-[node name="SelectorSprite1" type="AnimatedSprite2D" parent="."]
+[node name="CameraContainer" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_skcqn")
+animation = &""
 
-[node name="MoneyManagerControl" type="Control" parent="SelectorSprite1"]
+[node name="Selector2D" type="AnimatedSprite2D" parent="CameraContainer"]
+position = Vector2(0, -67)
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_q4frx")
+
+[node name="MoneyManagerControl" type="Control" parent="CameraContainer"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -574.0
@@ -33,7 +42,7 @@ offset_right = 576.0
 offset_bottom = 324.0
 metadata/_edit_use_anchors_ = true
 
-[node name="MoneyManagerMenu" parent="SelectorSprite1/MoneyManagerControl" instance=ExtResource("4_gocje")]
+[node name="MoneyManagerMenu" parent="CameraContainer/MoneyManagerControl" instance=ExtResource("4_gocje")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -47,15 +56,15 @@ offset_bottom = 76.272
 grow_vertical = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="PauseControl" type="Control" parent="SelectorSprite1"]
+[node name="PauseControl" type="Control" parent="CameraContainer"]
 layout_mode = 3
 anchors_preset = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="PauseBtn" parent="SelectorSprite1/PauseControl" instance=ExtResource("5_1e4y7")]
+[node name="PauseBtn" parent="CameraContainer/PauseControl" instance=ExtResource("5_1e4y7")]
 position = Vector2(-575, -322)
 
-[node name="CashTotal" type="Label" parent="SelectorSprite1"]
+[node name="CashTotal" type="Label" parent="CameraContainer"]
 offset_left = -569.0
 offset_top = -280.0
 offset_right = -391.0
@@ -63,4 +72,4 @@ offset_bottom = -257.0
 text = "Cash Total Verification:"
 metadata/_edit_use_anchors_ = true
 
-[node name="SelectorCam" type="Camera2D" parent="SelectorSprite1"]
+[node name="SelectorCam" type="Camera2D" parent="CameraContainer"]

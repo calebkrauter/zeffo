@@ -35,7 +35,7 @@ func is_out_of_frame(n):
 
 func gen_bills(quantity):
 	var newBill
-	var originPosX = 25
+	var originPosX = 77.5
 	var originPosY = 250
 
 	for n in quantity:
