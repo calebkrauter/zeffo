@@ -20,6 +20,8 @@ var slideOffset = Util.bundledQuantity
 func _ready():
 	prevPos = selector.position.x
 var hitBound = false
+var hitBoundL = false
+var hitBoundR = false
 var direction = 1
 var prevPos = 0
 var stop = false
@@ -41,11 +43,13 @@ func _process(delta):
 			Util.bills[n].get_node("IndexLabel").text = str(Util.indeciesDisplayed[n])
 	else:
 		controls_disabled(true)
-	if leftPressed || rightPressed:
+	if hitBoundL || leftPressed :
 		arrowLeftBtn.disabled = true
-		arrowRightBtn.disabled = true
 	else:
 		arrowLeftBtn.disabled = false
+	if hitBoundR || rightPressed:
+		arrowRightBtn.disabled = true
+	else:
 		arrowRightBtn.disabled = false
 	if direction == 1 && rightPressed:
 		if selector.position.x < prevPos + Util.billMarginX * direction:
@@ -66,6 +70,7 @@ func _process(delta):
 				selector.position.x = prevPos + Util.billMarginX * direction
 			if hitBound:
 				stop = true
+				
 			else:
 				stop = false
 		else:
@@ -128,11 +133,15 @@ func arrow_pressed(multiplicative):
 	
 	if Util.curBillIndex > 0 && Util.curBillIndex < Util.bills.size() - 1:
 		hitBound = false
+		hitBoundL = false
+		hitBoundR = false
 	if Util.curBillIndex >= 0 && Util.curBillIndex <= Util.bills.size() - 1 && !hitBound:
 		if Util.curBillIndex == 0:
 			hitBound = true
+			hitBoundL = true
 		if Util.curBillIndex == Util.bills.size() - 1:
 			hitBound = true
+			hitBoundR = true
 		print(Util.curBillIndex)
 		
 		
