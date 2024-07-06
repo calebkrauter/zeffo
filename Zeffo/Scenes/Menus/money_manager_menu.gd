@@ -18,9 +18,11 @@ var slideOffset = Util.bundledQuantity
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
-
-
+	prevPos = selector.position.x
+var hitBound = false
+var direction = 1
+var prevPos = 0
+var stop = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if !Util.bills.is_empty():
@@ -39,6 +41,36 @@ func _process(delta):
 			Util.bills[n].get_node("IndexLabel").text = str(Util.indeciesDisplayed[n])
 	else:
 		controls_disabled(true)
+	if leftPressed || rightPressed:
+		arrowLeftBtn.disabled = true
+		arrowRightBtn.disabled = true
+	else:
+		arrowLeftBtn.disabled = false
+		arrowRightBtn.disabled = false
+	if direction == 1 && rightPressed:
+		if selector.position.x < prevPos + Util.billMarginX * direction:
+			selector.position.x += direction * delta * 2000
+			if selector.position.x >= prevPos + Util.billMarginX * direction:
+				selector.position.x = prevPos + Util.billMarginX * direction
+			if hitBound:
+				stop = true
+			else:
+				stop = false
+		else:
+			prevPos = selector.position.x
+			rightPressed = false
+	elif direction == -1 && leftPressed:
+		if selector.position.x > prevPos + Util.billMarginX * direction:
+			selector.position.x += direction * delta * 2000
+			if selector.position.x <= prevPos + Util.billMarginX * direction:
+				selector.position.x = prevPos + Util.billMarginX * direction
+			if hitBound:
+				stop = true
+			else:
+				stop = false
+		else:
+			prevPos = selector.position.x
+			leftPressed = false
 
 func controls_disabled(isDisabled):
 	for n in controls.size():
@@ -61,15 +93,26 @@ func _on_select_pressed():
 		selectBtnPressed = false
 		Util.bills[Util.curBillIndex].isSelected = false
 	select_cur_bill()
-
+var leftPressed = false
+var rightPressed = false
 func _on_arrow_left_pressed():
 	arrow_pressed(-1)
+	direction = -1
+	if leftPressed:
+		leftPressed = false
+	else:
+		leftPressed = true
 	#slide_bills_right()
 func _on_arrow_right_pressed():
 	arrow_pressed(1)
+	direction = 1
+	if rightPressed:
+		rightPressed = false
+	else:
+		rightPressed = true
 	#slide_bills_left()
 
-var hitBound = false
+
 func arrow_pressed(multiplicative):
 	unselect_cur_bill()
 	selectedBillIndex = Util.curBillIndex
@@ -91,7 +134,8 @@ func arrow_pressed(multiplicative):
 		if Util.curBillIndex == Util.bills.size() - 1:
 			hitBound = true
 		print(Util.curBillIndex)
-		selector.position.x += Util.billMarginX * multiplicative
+		
+		
 	#if Util.curBillIndex <= Util.bills.size() - 1 && multiplicative == -1 && !hitBound:
 		#if Util.curBillIndex == 0:
 			#hitBound = true
