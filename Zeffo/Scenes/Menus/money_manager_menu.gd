@@ -14,19 +14,28 @@ var slideOffset = Util.bundledQuantity
 #const SELECTOR_CAMERA = preload("res://Scenes/Entities/selectorCamera.tscn")
 #@onready var selector = $"../../Selector"
 @onready var selector = $"../../.."
-
+var selfTargetBill
+var selfSelectedBill
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	prevPos = selector.position.x
+	prevSelectorPos = selector.position.x
+	prevBillPos = prevSelectorPos
+	selfDelta = 0
+	await get_tree().process_frame
+	selfTargetBill = Util.bills[Util.curBillIndex]
+	selfSelectedBill = Util.bills[Util.curBillIndex]
 var hitBound = false
 var hitBoundL = false
 var hitBoundR = false
 var direction = 1
-var prevPos = 0
+var prevSelectorPos = 0
+var prevBillPos = 0
 var stop = false
+var selfDelta
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	selfDelta = delta
 	if !Util.bills.is_empty():
 		controls_disabled(false)
 		Util.is_in_bill_array_bounds()
@@ -51,30 +60,39 @@ func _process(delta):
 		arrowRightBtn.disabled = true
 	else:
 		arrowRightBtn.disabled = false
+	slide_selector(delta, selector, false, "selector")
+	#if selectBtnPressed:
+		#slide_selector(delta, selfSelectedBill, false, "bill")
+		#slide_selector(delta, selfTargetBill, true, "bill")
+
+
+func slide_selector(delta, movable, inverse, typeOfMovable):
+	
+	var prevPos = prevSelectorPos
+	if typeOfMovable == "selector":
+		prevPos = prevSelectorPos
+	elif typeOfMovable == "bill":
+		prevPos = prevBillPos
+	if inverse:
+		direction *= -1
+		
 	if direction == 1 && rightPressed:
-		if selector.position.x < prevPos + Util.billMarginX * direction:
-			selector.position.x += direction * delta * 2000
-			if selector.position.x >= prevPos + Util.billMarginX * direction:
-				selector.position.x = prevPos + Util.billMarginX * direction
-			if hitBound:
-				stop = true
-			else:
-				stop = false
+		if movable.position.x < prevPos + Util.billMarginX * direction:
+			movable.position.x += direction * delta * 2500
+			if movable.position.x >= prevPos + Util.billMarginX * direction:
+				movable.position.x = prevPos + Util.billMarginX * direction
 		else:
-			prevPos = selector.position.x
+			prevSelectorPos = movable.position.x
+			prevBillPos = movable.position.x
 			rightPressed = false
 	elif direction == -1 && leftPressed:
-		if selector.position.x > prevPos + Util.billMarginX * direction:
-			selector.position.x += direction * delta * 2000
-			if selector.position.x <= prevPos + Util.billMarginX * direction:
-				selector.position.x = prevPos + Util.billMarginX * direction
-			if hitBound:
-				stop = true
-				
-			else:
-				stop = false
+		if movable.position.x > prevPos + Util.billMarginX * direction:
+			movable.position.x += direction * delta * 2500
+			if movable.position.x <= prevPos + Util.billMarginX * direction:
+				movable.position.x = prevPos + Util.billMarginX * direction
 		else:
-			prevPos = selector.position.x
+			prevSelectorPos = movable.position.x
+			prevBillPos = movable.position.x
 			leftPressed = false
 
 func controls_disabled(isDisabled):
@@ -230,7 +248,9 @@ func unselect_cur_bill():
 func move_selected_bill(selectedBillIndex, targetIndex):
 	var selectedBillDenomination = Util.bills[selectedBillIndex].get_denomination()
 	var targetBillDenomination = Util.bills[targetIndex].get_denomination()
-	
+	selfSelectedBill = Util.bills[selectedBillIndex]
+	selfTargetBill = Util.bills[targetIndex]
+
 	Util.bills[targetIndex].set_denomination(selectedBillDenomination)
 	Util.bills[selectedBillIndex].set_denomination(targetBillDenomination)
 	if !Util.bills[selectedBillIndex].is_flipped() && !Util.bills[targetIndex].is_flipped():
@@ -247,3 +267,4 @@ func move_selected_bill(selectedBillIndex, targetIndex):
 	elif Util.bills[selectedBillIndex].is_flipped() && Util.bills[targetIndex].is_flipped():
 		Util.bills[targetIndex].set_flipped(true)
 		Util.bills[selectedBillIndex].set_flipped(true)
+		
