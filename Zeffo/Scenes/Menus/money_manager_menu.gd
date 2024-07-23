@@ -16,12 +16,15 @@ var slideOffset = Util.bundledQuantity
 @onready var selector = $"../../.."
 var selfTargetBill
 var selfSelectedBill
+var bundlePressed = false
+@onready var movable = $Movable
+#var billLayoutContainer = Stage1OG.newBillLayout
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	prevSelectorPos = selector.position.x
-	prevBillPos = prevSelectorPos
 	selfDelta = 0
+	prevBillPos = selector.position.x
 	await get_tree().process_frame
 	selfTargetBill = Util.bills[Util.curBillIndex]
 	selfSelectedBill = Util.bills[Util.curBillIndex]
@@ -33,10 +36,14 @@ var prevSelectorPos = 0
 var prevBillPos = 0
 var stop = false
 var selfDelta
+var curBillRelativePosition = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	selfDelta = delta
+	if Util.curBillIndex > Util.bills.size() - 1:
+		Util.curBillIndex = Util.bills.size() - 1
 	if !Util.bills.is_empty():
+		curBillRelativePosition = Util.bills[Util.curBillIndex].position.x - Util.billPosXOffset - Util.startingIndexBillPosXOffset
 		controls_disabled(false)
 		Util.is_in_bill_array_bounds()
 		select_cur_bill()
@@ -60,39 +67,47 @@ func _process(delta):
 		arrowRightBtn.disabled = true
 	else:
 		arrowRightBtn.disabled = false
-	slide_selector(delta, selector, false, "selector")
-	#if selectBtnPressed:
-		#slide_selector(delta, selfSelectedBill, false, "bill")
-		#slide_selector(delta, selfTargetBill, true, "bill")
+	slide_selector(delta)
+	move_bills(delta)
+
+func move_bills(delta):
+	if bundlePressed && selector.position.x >= curBillRelativePosition:
+		var varianceOffset = abs(selector.position.x - curBillRelativePosition)
+		for n in Util.bills.size():
+			Util.bills[n].position.x += varianceOffset
+		bundlePressed = false
+	if bundlePressed && curBillRelativePosition != selector.position.x:
+		for n in Util.bills.size():
+			Util.bills[n].position.x -= 2500 * delta
 
 
-func slide_selector(delta, movable, inverse, typeOfMovable):
-	
-	var prevPos = prevSelectorPos
-	if typeOfMovable == "selector":
-		prevPos = prevSelectorPos
-	elif typeOfMovable == "bill":
-		prevPos = prevBillPos
-	if inverse:
-		direction *= -1
-		
+
+
+func slide_selector(delta):
 	if direction == 1 && rightPressed:
-		if movable.position.x < prevPos + Util.billMarginX * direction:
-			movable.position.x += direction * delta * 2500
-			if movable.position.x >= prevPos + Util.billMarginX * direction:
-				movable.position.x = prevPos + Util.billMarginX * direction
+		#print("1")
+		#print(selector.position.x)
+		if selector.position.x < prevSelectorPos + Util.billMarginX * direction:
+			#print("2")
+			selector.position.x += direction * delta * 2500
+			if selector.position.x >= prevSelectorPos + Util.billMarginX * direction:
+				#print("3")
+				selector.position.x = prevSelectorPos + Util.billMarginX * direction
 		else:
-			prevSelectorPos = movable.position.x
-			prevBillPos = movable.position.x
+			#print("4")
+			prevSelectorPos = selector.position.x
 			rightPressed = false
 	elif direction == -1 && leftPressed:
-		if movable.position.x > prevPos + Util.billMarginX * direction:
-			movable.position.x += direction * delta * 2500
-			if movable.position.x <= prevPos + Util.billMarginX * direction:
-				movable.position.x = prevPos + Util.billMarginX * direction
+		#print("1")
+		if selector.position.x > prevSelectorPos + Util.billMarginX * direction:
+			#print("2")
+			selector.position.x += direction * delta * 2500
+			if selector.position.x <= prevSelectorPos + Util.billMarginX * direction:
+				#print("3")
+				selector.position.x = prevSelectorPos + Util.billMarginX * direction
 		else:
-			prevSelectorPos = movable.position.x
-			prevBillPos = movable.position.x
+			#print("4")
+			prevSelectorPos = selector.position.x
 			leftPressed = false
 
 func controls_disabled(isDisabled):
@@ -125,7 +140,7 @@ func _on_arrow_left_pressed():
 		leftPressed = false
 	else:
 		leftPressed = true
-	#slide_bills_right()
+
 func _on_arrow_right_pressed():
 	arrow_pressed(1)
 	direction = 1
@@ -133,8 +148,6 @@ func _on_arrow_right_pressed():
 		rightPressed = false
 	else:
 		rightPressed = true
-	#slide_bills_left()
-
 
 func arrow_pressed(multiplicative):
 	unselect_cur_bill()
@@ -161,32 +174,6 @@ func arrow_pressed(multiplicative):
 			hitBound = true
 			hitBoundR = true
 		print(Util.curBillIndex)
-		
-		
-	#if Util.curBillIndex <= Util.bills.size() - 1 && multiplicative == -1 && !hitBound:
-		#if Util.curBillIndex == 0:
-			#hitBound = true
-		#print(Util.curBillIndex)
-		#selector.get_node("SelectorSprite").position.x += Util.billMarginX * multiplicative
-	#if Util.curBillIndex < Util.bills.size() -1:
-		#print(Util.curBillIndex)
-		#selector.get_node("SelectorSprite").position.x += Util.billMarginX * multiplicative
-
-#func slide_bills_left():
-	#if Util.curBillIndex >= Util.billQuantity-1:
-		#Util.newBoundR = Util.billQuantity-1
-		#
-	#if Util.curBillIndex > Util.newBoundR: #&& Util.curBillIndex > 9 && Util.curBillIndex != Util.billQuantity-1:
-		#for n in Util.billQuantity:
-			#Util.bills[n].position.x -= Util.billMarginX
-			#Util.newBoundL = Util.curBillIndex - 9
-#func slide_bills_right():
-	#if Util.curBillIndex <= 0:
-		#Util.newBoundL = 0
-	#if Util.curBillIndex < Util.newBoundL:# && Util.curBillIndex < Util.billQuantity - 10 && Util.curBillIndex != 0:
-		#for n in Util.billQuantity:
-			#Util.bills[n].position.x += Util.billMarginX
-			#Util.newBoundR = Util.curBillIndex + 9
 
 func _on_count_pressed():
 	pass
@@ -215,26 +202,14 @@ func flip_tails(curBill):
 
 func _on_bundle_pressed():
 	if !Util.bills.is_empty():
-		if Util.curBillIndex >= Util.bundledQuantity - 1:
-			Util.bills[Util.curBillIndex].isSelected = false
-			Util.curBillIndex = Util.curBillIndex - slideOffset
-			Util.is_in_bill_array_bounds()
-			Util.bills[Util.curBillIndex].isSelected = true
-			# This only works for index selected at 30
-			# TODO fix issue where sometimes bills slide to far and sometimes the wrong bill where the movable selector is.
-			slideOffset = 11
-		else:
-			slideOffset = Util.bundledQuantity
+		bundlePressed = true
 		for n in Util.bundledQuantity:
-			if n >= Util.bills.size():
+
+			if Util.bills.is_empty():
 				break
-			Util.bills[0].hide()
-			Util.bills.remove_at(0)
-		if Util.bills.size() < Util.bundledQuantity:
-			slideOffset = Util.bills.size()
-		for n in Util.bills.size():
-			Util.bills[n].position.x -= Util.billMarginX * slideOffset
-			Util.newBoundL = Util.curBillIndex - 9
+			elif Util.bills[0] in Util.bills:
+					Util.bills[0].hide()
+					Util.bills.remove_at(0)
 
 func select_cur_bill():
 	

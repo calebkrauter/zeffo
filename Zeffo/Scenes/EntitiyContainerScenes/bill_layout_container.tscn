@@ -4,3 +4,5 @@
 
 [node name="BillLayoutContainer" type="Node2D"]
 script = ExtResource("1_wfkuu")
+
+[node name="Movable" type="Sprite2D" parent="."]

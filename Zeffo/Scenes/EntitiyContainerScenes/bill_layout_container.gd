@@ -3,6 +3,7 @@ extends Node2D
 var bill = preload("res://Scenes/Entities/bill.tscn")
 @onready var bills = $"."
 @onready var billLayoutContainer = $"."
+@onready var movable = $Movable
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,14 +36,12 @@ func is_out_of_frame(n):
 
 func gen_bills(quantity):
 	var newBill
-	var originPosX = 77.5
-	var originPosY = 250
 
 	for n in quantity:
 		newBill = bill.instantiate()
-		bills.add_child(newBill)
-		newBill.position.x += originPosX + n * Util.billMarginX
-		newBill.position.y = originPosY
+		movable.add_child(newBill)
+		newBill.position.x += Util.billPosXOffset + n * Util.billMarginX
+		newBill.position.y = Util.billPosYOffset
 		Util.bills.append(newBill)
 		Util.indeciesDisplayed.append(n+1)
 		

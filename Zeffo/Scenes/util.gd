@@ -1,7 +1,7 @@
 extends Node2D
 var paused = false
 var bills = []
-var billQuantity = 29
+var billQuantity = 5000
 var bundledQuantity = 30
 var frameL = curBillIndex
 var frameR = curBillIndex
@@ -11,7 +11,9 @@ var billMarginX = 100
 var newBoundR = 10
 var newBoundL = 0
 var indeciesDisplayed = []
-
+var billPosXOffset = 77.5
+var billPosYOffset = 250
+var startingIndexBillPosXOffset = 500
 var bundles = []
 #var center = get_viewport().get_visible_rect().size / 2
 # Called when the node enters the scene tree for the first time.

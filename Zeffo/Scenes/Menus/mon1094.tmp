@@ -1,0 +1,98 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcy33ghg8gd1p"]
+
+[ext_resource type="Script" path="res://Scenes/Menus/money_manager_menu.gd" id="1_c7vhb"]
+
+[node name="MoneyManagerMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -824.0
+offset_bottom = -520.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_c7vhb")
+
+[node name="ArrowRight" type="Button" parent="."]
+texture_filter = 1
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -63.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "->"
+
+[node name="Select" type="Button" parent="."]
+texture_filter = 1
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -31.5
+offset_right = 31.5
+offset_bottom = 31.0
+grow_horizontal = 2
+text = "SELECT"
+
+[node name="ArrowLeft" type="Button" parent="."]
+texture_filter = 1
+layout_direction = 2
+layout_mode = 1
+offset_right = 63.0
+offset_bottom = 31.0
+text = "<-"
+
+[node name="Count" type="Button" parent="."]
+texture_filter = 1
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Count"
+
+[node name="Flip" type="Button" parent="."]
+texture_filter = 1
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -31.5
+offset_top = -31.0
+offset_right = 31.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "Flip"
+
+[node name="Bundle" type="Button" parent="."]
+texture_filter = 1
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 63.0
+grow_vertical = 0
+text = "Bundle"
+
+[connection signal="pressed" from="ArrowRight" to="." method="_on_arrow_right_pressed"]
+[connection signal="pressed" from="Select" to="." method="_on_select_pressed"]
+[connection signal="pressed" from="ArrowLeft" to="." method="_on_arrow_left_pressed"]
+[connection signal="pressed" from="Count" to="." method="_on_count_pressed"]
+[connection signal="pressed" from="Flip" to="." method="_on_flip_pressed"]
+[connection signal="pressed" from="Bundle" to="." method="_on_bundle_pressed"]

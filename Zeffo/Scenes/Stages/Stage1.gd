@@ -4,7 +4,7 @@ const BILL_LAYOUT_CONTAINER = preload("res://Scenes/EntitiyContainerScenes/bill_
 # Called when the node enters the scene tree for the first time.
 #@onready var cash_total = $CashTotal
 @onready var bills = $BillsFrame/BillsControl
-
+@export var newBillLayout : BillGenerator
 @onready var cash_total = $Selector/CameraContainer/CashTotal
 #@onready var cash_total = $Selector/CashTotal
 #@onready var cash_total = $SelectorSprite1/CashTotal
@@ -12,7 +12,7 @@ const BILL_LAYOUT_CONTAINER = preload("res://Scenes/EntitiyContainerScenes/bill_
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var newBillLayout = BILL_LAYOUT_CONTAINER.instantiate()
+	newBillLayout = BILL_LAYOUT_CONTAINER.instantiate()
 	bills.add_child(newBillLayout)
 	var cashTotalVal
 	for i in Util.billQuantity:
