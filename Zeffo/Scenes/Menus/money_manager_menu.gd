@@ -75,10 +75,12 @@ func move_bills(delta):
 		var varianceOffset = abs(selector.position.x - curBillRelativePosition)
 		for n in Util.bills.size():
 			Util.bills[n].position.x += varianceOffset
+			Util.bills[n].get_node("Bill2D").scale = Vector2(0.4, 0.4)
 		bundlePressed = false
 	if bundlePressed && curBillRelativePosition != selector.position.x:
 		for n in Util.bills.size():
-			Util.bills[n].position.x -= 2500 * delta
+			Util.bills[n].position.x -= 5000 * delta
+			Util.bills[n].get_node("Bill2D").scale = Vector2(0.38, 0.38)
 
 
 
