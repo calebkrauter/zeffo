@@ -178,7 +178,12 @@ func arrow_pressed(multiplicative):
 		print(Util.curBillIndex)
 
 func _on_count_pressed():
-	pass
+	if !Util.bills[Util.curBillIndex].get_node("Counted").visible:
+		Util.billsCounted += 1
+		Util.countedTotal += int(Util.bills[Util.curBillIndex].get_denomination())
+	Util.bills[Util.curBillIndex].get_node("Counted").visible = true
+	
+	
 
 func _on_flip_pressed():
 	flipBtnPressed = true
@@ -227,6 +232,19 @@ func move_selected_bill(selectedBillIndex, targetIndex):
 	var targetBillDenomination = Util.bills[targetIndex].get_denomination()
 	selfSelectedBill = Util.bills[selectedBillIndex]
 	selfTargetBill = Util.bills[targetIndex]
+
+	if Util.bills[targetIndex].get_node("Counted").visible && Util.bills[selectedBillIndex].get_node("Counted").visible:
+		Util.bills[targetIndex].get_node("Counted").visible = true
+		Util.bills[selectedBillIndex].get_node("Counted").visible = true
+	elif Util.bills[targetIndex].get_node("Counted").visible && !Util.bills[selectedBillIndex].get_node("Counted").visible:
+		Util.bills[targetIndex].get_node("Counted").visible = false
+		Util.bills[selectedBillIndex].get_node("Counted").visible = true
+	elif !Util.bills[targetIndex].get_node("Counted").visible && Util.bills[selectedBillIndex].get_node("Counted").visible:
+		Util.bills[targetIndex].get_node("Counted").visible = true
+		Util.bills[selectedBillIndex].get_node("Counted").visible = false
+	elif Util.bills[targetIndex].get_node("Counted").visible && Util.bills[selectedBillIndex].get_node("Counted").visible:
+		Util.bills[targetIndex].get_node("Counted").visible = false
+		Util.bills[selectedBillIndex].get_node("Counted").visible = false
 
 	Util.bills[targetIndex].set_denomination(selectedBillDenomination)
 	Util.bills[selectedBillIndex].set_denomination(targetBillDenomination)

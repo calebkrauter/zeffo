@@ -44,6 +44,7 @@ func gen_bills(quantity):
 		newBill.position.y = Util.billPosYOffset
 		Util.bills.append(newBill)
 		Util.indeciesDisplayed.append(n+1)
+		Util.bills[n].get_node("Counted").visible = false
 		
 		
 #Temp assign diff values to some bills to ensure selection works proprerly.

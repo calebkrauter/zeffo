@@ -5,7 +5,7 @@ var isSelected = false
 var isFlipped = false
 var heads = true
 var isBundled = false
-var denomination
+var denomination = "zero"
 @onready var indexLabel = $IndexLabel
 
 

@@ -2,24 +2,23 @@ extends Node2D
 const BILL_LAYOUT_CONTAINER = preload("res://Scenes/EntitiyContainerScenes/bill_layout_container.tscn")
 
 # Called when the node enters the scene tree for the first time.
-#@onready var cash_total = $CashTotal
+#@onready var cashTotal = $CashTotal
 @onready var bills = $BillsFrame/BillsControl
 @export var newBillLayout : BillGenerator
-@onready var cash_total = $Selector/CameraContainer/CashTotal
-#@onready var cash_total = $Selector/CashTotal
-#@onready var cash_total = $SelectorSprite1/CashTotal
-
+@onready var cashTotal = $Selector/CameraContainer/CashTotal
+@onready var growingTotal = $Selector/CameraContainer/GrowingTotal
+@onready var billsCounted = $Selector/CameraContainer/BillsCounted
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	newBillLayout = BILL_LAYOUT_CONTAINER.instantiate()
 	bills.add_child(newBillLayout)
-	var cashTotalVal
 	for i in Util.billQuantity:
 		Util.totalCash += int(Util.bills[i].get_denomination())
-		#print(Util.bills[i].get_denomination())
-	cashTotalVal = str(Util.totalCash)
-	cash_total.text = "Cash Total Verification: " + cashTotalVal
+	cashTotal.text = "You should have: " + str(Util.totalCash) + " cash."
+	growingTotal.text = "Current Total: " + str(Util.countedTotal) + " cash."
+	billsCounted.text = "Bills Counted: " + str(Util.billsCounted)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	growingTotal.text = "Current Total: " + str(Util.countedTotal) + " cash."
+	billsCounted.text = "Bills Counted: " + str(Util.billsCounted)

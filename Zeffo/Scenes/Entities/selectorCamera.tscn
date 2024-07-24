@@ -65,11 +65,33 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-575, -322)
 
 [node name="CashTotal" type="Label" parent="CameraContainer"]
-offset_left = -569.0
-offset_top = -280.0
-offset_right = -391.0
-offset_bottom = -257.0
+offset_left = -496.0
+offset_top = -319.0
+offset_right = -318.0
+offset_bottom = -296.0
 text = "Cash Total Verification:"
+metadata/_edit_use_anchors_ = true
+
+[node name="GrowingTotal" type="Label" parent="CameraContainer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -495.0
+offset_top = -293.0
+offset_right = -317.0
+offset_bottom = -270.0
+grow_horizontal = 0
+text = "Current Total:
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="BillsCounted" type="Label" parent="CameraContainer"]
+offset_left = -496.0
+offset_top = -269.0
+offset_right = -318.0
+offset_bottom = -246.0
+text = "Bills Counted:
+"
 metadata/_edit_use_anchors_ = true
 
 [node name="SelectorCam" type="Camera2D" parent="CameraContainer"]
