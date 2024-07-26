@@ -28,6 +28,7 @@ func _ready():
 	await get_tree().process_frame
 	selfTargetBill = Util.bills[Util.curBillIndex]
 	selfSelectedBill = Util.bills[Util.curBillIndex]
+	verify_counted.visible = false
 var hitBound = false
 var hitBoundL = false
 var hitBoundR = false
@@ -37,6 +38,9 @@ var prevBillPos = 0
 var stop = false
 var selfDelta
 var curBillRelativePosition = 0
+@onready var verify_counted = $"../../VerifyCounted"
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	selfDelta = delta
@@ -182,6 +186,8 @@ func _on_count_pressed():
 		Util.billsCounted += 1
 		Util.countedTotal += int(Util.bills[Util.curBillIndex].get_denomination())
 	Util.bills[Util.curBillIndex].get_node("Counted").visible = true
+	if Util.billQuantity == Util.billsCounted:
+		verify_counted.visible = true
 	
 	
 

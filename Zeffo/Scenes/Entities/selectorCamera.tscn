@@ -94,4 +94,12 @@ text = "Bills Counted:
 "
 metadata/_edit_use_anchors_ = true
 
+[node name="VerifyCounted" type="Label" parent="CameraContainer"]
+offset_left = -107.0
+offset_top = -319.0
+offset_right = 110.0
+offset_bottom = -296.0
+text = "All Bills Have Been Counted."
+metadata/_edit_use_anchors_ = true
+
 [node name="SelectorCam" type="Camera2D" parent="CameraContainer"]
