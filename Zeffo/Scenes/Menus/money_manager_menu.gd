@@ -18,7 +18,10 @@ var selfTargetBill
 var selfSelectedBill
 var bundlePressed = false
 @onready var movable = $Movable
+@onready var bundle2d = $Bundle2D
+const BUNDLE = preload("res://Scenes/Entities/bundle.tscn")
 #var billLayoutContainer = Stage1OG.newBillLayout
+@onready var moneyManagerMenu = $"."
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,6 +42,7 @@ var stop = false
 var selfDelta
 var curBillRelativePosition = 0
 @onready var verify_counted = $"../../VerifyCounted"
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -214,6 +218,7 @@ func flip_tails(curBill):
 	curBill.get_node("Bill2D").frame = 0
 
 func _on_bundle_pressed():
+	var billIterater = 0
 	if !Util.bills.is_empty():
 		bundlePressed = true
 		for n in Util.bundledQuantity:
@@ -223,6 +228,11 @@ func _on_bundle_pressed():
 			elif Util.bills[0] in Util.bills:
 					Util.bills[0].hide()
 					Util.bills.remove_at(0)
+		billIterater += 1
+		var newBundle = BUNDLE.instantiate()
+		moneyManagerMenu.add_child(newBundle)
+		newBundle.position.x += 75 * billIterater
+
 
 func select_cur_bill():
 	

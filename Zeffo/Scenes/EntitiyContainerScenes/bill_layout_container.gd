@@ -1,6 +1,6 @@
 class_name BillGenerator
 extends Node2D
-var bill = preload("res://Scenes/Entities/bill.tscn")
+var BILL = preload("res://Scenes/Entities/bill.tscn")
 @onready var bills = $"."
 @onready var billLayoutContainer = $"."
 @onready var movable = $Movable
@@ -13,32 +13,24 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if !Util.bills.is_empty():
-		Util.frameL = Util.curBillIndex -10
-		Util.frameR = Util.curBillIndex +10
+		Util.frameL = Util.curBillIndex - 10
+		Util.frameR = Util.curBillIndex + 10
 		if Util.frameL <=0:
 			Util.frameL = 0
-		if Util.frameR >= Util.billQuantity -1:
-			Util.frameR = Util.billQuantity -1
+		if Util.frameR >= Util.billQuantity - 1:
+			Util.frameR = Util.billQuantity - 1
 		for n in Util.billQuantity:
 			if billLayoutContainer.is_ancestor_of(Util.bills[n]):
 				is_out_of_frame(n)
 
 func is_out_of_frame(n):
-	#if n < Util.frameL:
-		#Util.bills[n].hide()
-	#if n > Util.frameR:
-		#Util.bills[n].hide()
-	#if n <= Util.frameR && n > Util.frameL:
-		#Util.bills[n].show()
-	#if n >= Util.frameL && n < Util.frameR:
-		#Util.bills[n].show()
 	pass
 
 func gen_bills(quantity):
 	var newBill
 
 	for n in quantity:
-		newBill = bill.instantiate()
+		newBill = BILL.instantiate()
 		movable.add_child(newBill)
 		newBill.position.x += Util.billPosXOffset + n * Util.billMarginX
 		newBill.position.y = Util.billPosYOffset

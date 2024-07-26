@@ -1,21 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://dksds5ronvrwb"]
+[gd_scene load_steps=5 format=3 uid="uid://dksds5ronvrwb"]
 
-[ext_resource type="Script" path="res://Scenes/Entities/bundle.gd" id="1_36qnl"]
-[ext_resource type="Texture2D" path="res://Assets/Entities/Bills/bundle.png" id="1_mpmf1"]
+[ext_resource type="Texture2D" uid="uid://bjbnv1br500hj" path="res://Assets/Entities/Bills/dollarUp.png" id="1_hpln2"]
+[ext_resource type="Script" path="res://Scenes/Entities/bundle.gd" id="1_rdrxn"]
+[ext_resource type="Script" path="res://Scenes/Entities/Bundle2D.gd" id="3_jq5uy"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_nr7wj"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_kyviv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_mpmf1")
+"texture": ExtResource("1_hpln2")
 }],
-"loop": false,
+"loop": true,
 "name": &"default",
-"speed": 0.0
+"speed": 5.0
 }]
 
 [node name="Bundle" type="Node2D"]
-script = ExtResource("1_36qnl")
+script = ExtResource("1_rdrxn")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_nr7wj")
+[node name="Bundle2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-44, -322)
+scale = Vector2(0.2225, 0.2225)
+sprite_frames = SubResource("SpriteFrames_kyviv")
+script = ExtResource("3_jq5uy")
