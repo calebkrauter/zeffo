@@ -41,6 +41,7 @@ var prevBillPos = 0
 var stop = false
 var selfDelta
 var curBillRelativePosition = 0
+var billIterater = 0
 @onready var verify_counted = $"../../VerifyCounted"
 
 
@@ -218,7 +219,6 @@ func flip_tails(curBill):
 	curBill.get_node("Bill2D").frame = 0
 
 func _on_bundle_pressed():
-	var billIterater = 0
 	if !Util.bills.is_empty():
 		bundlePressed = true
 		for n in Util.bundledQuantity:
@@ -231,7 +231,7 @@ func _on_bundle_pressed():
 		billIterater += 1
 		var newBundle = BUNDLE.instantiate()
 		moneyManagerMenu.add_child(newBundle)
-		newBundle.position.x += 75 * billIterater
+		newBundle.position.x += 50 * billIterater
 
 
 func select_cur_bill():
