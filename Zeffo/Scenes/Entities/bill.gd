@@ -22,7 +22,6 @@ func is_flipped():
 	return self.isFlipped
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#bill_Select.hide()
 	pass
 
 
