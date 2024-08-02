@@ -219,19 +219,42 @@ func flip_tails(curBill):
 	curBill.get_node("Bill2D").frame = 0
 
 func _on_bundle_pressed():
+	var billsBundled = 0;
+	var miscountChance = 0;
+	var miscountedBillDenominations = [];
+	var dynamicBundledQuantity = Util.bundledQuantity;
+	var newBundleStarted = false;
 	if !Util.bills.is_empty():
 		bundlePressed = true
+		var numOfBillsMiscounted = 0;
+		if dynamicBundledQuantity <= Util.bundledQuantity && dynamicBundledQuantity < 10:
+			dynamicBundledQuantity = Util.bills.size();
 		for n in Util.bundledQuantity:
-
+			if !Util.bills[0].get_node("Counted").visible:
+				numOfBillsMiscounted = randi_range(0, 4);
+				if numOfBillsMiscounted > Util.billQuantity:
+					numOfBillsMiscounted = Util.billQuantity;
+				dynamicBundledQuantity -= numOfBillsMiscounted
+				for m in numOfBillsMiscounted:
+					if n + m >= Util.bundledQuantity - 1:
+						break;
+					else:
+						miscountedBillDenominations.append(int(Util.bills[n + m].get_denomination()));
+				break;
+		for n in dynamicBundledQuantity:
 			if Util.bills.is_empty():
 				break
-			elif Util.bills[0] in Util.bills:
-					Util.bills[0].hide()
-					Util.bills.remove_at(0)
-		billIterater += 1
-		var newBundle = BUNDLE.instantiate()
-		moneyManagerMenu.add_child(newBundle)
-		newBundle.position.x += 50 * billIterater
+			billsBundled += 1;
+			if Util.bills[0] in Util.bills:
+				Util.grandTotal += int(Util.bills[0].get_denomination());
+				Util.bills[0].hide()
+				Util.bills.remove_at(0)
+				newBundleStarted = true;
+		if newBundleStarted:
+			billIterater += 1
+			var newBundle = BUNDLE.instantiate()
+			moneyManagerMenu.add_child(newBundle)
+			newBundle.position.x += 50 * billIterater
 
 
 func select_cur_bill():

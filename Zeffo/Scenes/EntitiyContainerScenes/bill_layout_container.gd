@@ -38,7 +38,6 @@ func gen_bills(quantity):
 		Util.indeciesDisplayed.append(n+1)
 		Util.bills[n].get_node("Counted").visible = false
 		
-		
 #Temp assign diff values to some bills to ensure selection works proprerly.
 		if n % 2 == 0:
 			Util.bills[n].get_node("Bill2D").play("1")

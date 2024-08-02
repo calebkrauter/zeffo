@@ -102,4 +102,15 @@ offset_bottom = -296.0
 text = "All Bills Have Been Counted."
 metadata/_edit_use_anchors_ = true
 
+[node name="UnverifiedCount" type="Label" parent="CameraContainer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -496.0
+offset_top = -244.0
+offset_right = -356.0
+offset_bottom = -221.0
+grow_horizontal = 0
+text = "Unverified Count: "
+
 [node name="SelectorCam" type="Camera2D" parent="CameraContainer"]
