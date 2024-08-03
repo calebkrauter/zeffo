@@ -9,6 +9,7 @@ script = ExtResource("1_j21sl")
 [node name="PauseBtn" type="Button" parent="."]
 offset_right = 8.0
 offset_bottom = 8.0
+action_mode = 0
 text = "PAUSE
 "
 

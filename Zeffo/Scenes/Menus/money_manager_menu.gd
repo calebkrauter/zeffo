@@ -16,7 +16,7 @@ var slideOffset = Util.bundledQuantity
 @onready var selector = $"../../.."
 var selfTargetBill
 var selfSelectedBill
-var bundlePressed = false
+var bundleBtnPressed = false
 @onready var movable = $Movable
 @onready var bundle2d = $Bundle2D
 const BUNDLE = preload("res://Scenes/Entities/bundle.tscn")
@@ -80,13 +80,13 @@ func _process(delta):
 	move_bills(delta)
 
 func move_bills(delta):
-	if bundlePressed && selector.position.x >= curBillRelativePosition:
+	if bundleBtnPressed && selector.position.x >= curBillRelativePosition:
 		var varianceOffset = abs(selector.position.x - curBillRelativePosition)
 		for n in Util.bills.size():
 			Util.bills[n].position.x += varianceOffset
 			Util.bills[n].get_node("Bill2D").scale = Vector2(0.4, 0.4)
-		bundlePressed = false
-	if bundlePressed && curBillRelativePosition != selector.position.x:
+		bundleBtnPressed = false
+	if bundleBtnPressed && curBillRelativePosition != selector.position.x:
 		for n in Util.bills.size():
 			Util.bills[n].position.x -= 5000 * delta
 			Util.bills[n].get_node("Bill2D").scale = Vector2(0.38, 0.38)
@@ -134,13 +134,13 @@ func update_bill_scale():
 		Util.bills[Util.curBillIndex].get_node("Bill2D").scale = Vector2(0.4, 0.4)
 
 func _on_select_pressed():
-	#selectBtnPressed = true
 	if !selectBtnPressed:
 		selectBtnPressed = true
 		Util.bills[Util.curBillIndex].isSelected = true
 	else:
 		selectBtnPressed = false
 		Util.bills[Util.curBillIndex].isSelected = false
+
 var leftPressed = false
 var rightPressed = false
 func _on_arrow_left_pressed():
@@ -182,7 +182,7 @@ func arrow_pressed(multiplicative):
 		if Util.curBillIndex == Util.bills.size() - 1:
 			hitBound = true
 			hitBoundR = true
-		print(Util.curBillIndex)
+
 
 func _on_count_pressed():
 	if !Util.bills[Util.curBillIndex].get_node("Counted").visible:
@@ -216,6 +216,10 @@ func flip_heads(curBill):
 func flip_tails(curBill):
 	curBill.get_node("Bill2D").frame = 0
 
+var dontStartNewBundle = false
+var firstOfSelectBundle = false
+var selectBundleAmt = 0
+var selectAndBundlePressed = false
 func _on_bundle_pressed():
 	var billsBundled = 0;
 	var miscountChance = 0;
@@ -223,44 +227,72 @@ func _on_bundle_pressed():
 	var dynamicBundledQuantity = Util.bundledQuantity;
 	var newBundleStarted = false;
 	if !Util.bills.is_empty():
-		bundlePressed = true
-		var numOfBillsMiscounted = 0;
+		bundleBtnPressed = true
+		var numOfBillsMiscounted = 0
 		var foundBillNotCounted = false
-		if dynamicBundledQuantity <= Util.bundledQuantity && dynamicBundledQuantity < 10:
-			dynamicBundledQuantity = Util.bills.size();
-		for n in Util.bundledQuantity:
-			if Util.bills.is_empty():
-				break;
-			if n >= Util.bills.size():
-				break;
-			Util.grandTotal += int(Util.bills[n].get_denomination());
-			
-			if !Util.bills[n].get_node("Counted").visible && !foundBillNotCounted:
-				numOfBillsMiscounted = randi_range(0, 4);
-				if numOfBillsMiscounted > Util.billQuantity:
-					numOfBillsMiscounted = Util.billQuantity;
-				dynamicBundledQuantity -= numOfBillsMiscounted
-
-				for m in numOfBillsMiscounted:
-					if n + m >= Util.bundledQuantity - 1:
-						break;
-					else:
-						miscountedBillDenominations.append(int(Util.bills[n + m].get_denomination()));
-				foundBillNotCounted = true;
+		var billIndexToRemove = 0
+		if !selectBtnPressed:
+			if dynamicBundledQuantity <= Util.bundledQuantity && dynamicBundledQuantity < 10:
+				dynamicBundledQuantity = Util.bills.size();
+			for n in Util.bundledQuantity:
+				if Util.bills.is_empty():
+					break;
+				if n >= Util.bills.size():
+					break;
+				Util.grandTotal += int(Util.bills[n].get_denomination());
 				
+				if !Util.bills[n].get_node("Counted").visible && !foundBillNotCounted:
+					numOfBillsMiscounted = randi_range(0, 4);
+					if numOfBillsMiscounted > Util.billQuantity:
+						numOfBillsMiscounted = Util.billQuantity
+					dynamicBundledQuantity -= numOfBillsMiscounted
+
+					for m in numOfBillsMiscounted:
+						if n + m >= Util.bundledQuantity - 1:
+							break;
+						else:
+							miscountedBillDenominations.append(int(Util.bills[n + m].get_denomination()));
+					foundBillNotCounted = true;
+		else:
+			Util.grandTotal += int(Util.bills[Util.curBillIndex].get_denomination());
+			countBtn.emit_signal("pressed")
+			selectBtn.emit_signal("pressed")
+			dynamicBundledQuantity = 1
+			billIndexToRemove = Util.curBillIndex
+			selectAndBundlePressed = true
+			
+			if selectBundleAmt >= Util.bundledQuantity :
+				dontStartNewBundle = false
+				firstOfSelectBundle = true
+				selectBundleAmt = 0
+			else:
+				firstOfSelectBundle = false
+			selectBundleAmt += 1
+		
 		for n in dynamicBundledQuantity:
 			if Util.bills.is_empty():
 				break
 			billsBundled += 1;
-			if Util.bills[0] in Util.bills:
-				Util.bills[0].hide()
-				Util.bills.remove_at(0)
+			if selectAndBundlePressed:
+				billsBundled = selectBundleAmt
+			if Util.bills[billIndexToRemove] in Util.bills:
+				Util.bills[billIndexToRemove].hide()
+				Util.bills.remove_at(billIndexToRemove)
 				newBundleStarted = true;
-		if newBundleStarted:
-			billIterater += 1
+		if newBundleStarted && !dontStartNewBundle:
+			if !selectAndBundlePressed || firstOfSelectBundle:
+				billIterater += 1
 			var newBundle = BUNDLE.instantiate()
 			moneyManagerMenu.add_child(newBundle)
 			newBundle.position.x += 50 * billIterater
+			if firstOfSelectBundle:
+				dontStartNewBundle = true
+		if selectAndBundlePressed:
+			for n in Util.curBillIndex:
+				Util.bills[n].position.x += 100
+			selectAndBundlePressed = false
+	print(billsBundled)
+	print(selectBundleAmt)
 
 
 
