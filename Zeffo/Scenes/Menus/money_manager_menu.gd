@@ -227,26 +227,34 @@ func _on_bundle_pressed():
 	if !Util.bills.is_empty():
 		bundlePressed = true
 		var numOfBillsMiscounted = 0;
+		var foundBillNotCounted = false
 		if dynamicBundledQuantity <= Util.bundledQuantity && dynamicBundledQuantity < 10:
 			dynamicBundledQuantity = Util.bills.size();
 		for n in Util.bundledQuantity:
-			if !Util.bills[0].get_node("Counted").visible:
+			if Util.bills.is_empty():
+				break;
+			if n >= Util.bills.size():
+				break;
+			Util.grandTotal += int(Util.bills[n].get_denomination());
+			
+			if !Util.bills[n].get_node("Counted").visible && !foundBillNotCounted:
 				numOfBillsMiscounted = randi_range(0, 4);
 				if numOfBillsMiscounted > Util.billQuantity:
 					numOfBillsMiscounted = Util.billQuantity;
 				dynamicBundledQuantity -= numOfBillsMiscounted
+
 				for m in numOfBillsMiscounted:
 					if n + m >= Util.bundledQuantity - 1:
 						break;
 					else:
 						miscountedBillDenominations.append(int(Util.bills[n + m].get_denomination()));
-				break;
+				foundBillNotCounted = true;
+				
 		for n in dynamicBundledQuantity:
 			if Util.bills.is_empty():
 				break
 			billsBundled += 1;
 			if Util.bills[0] in Util.bills:
-				Util.grandTotal += int(Util.bills[0].get_denomination());
 				Util.bills[0].hide()
 				Util.bills.remove_at(0)
 				newBundleStarted = true;
