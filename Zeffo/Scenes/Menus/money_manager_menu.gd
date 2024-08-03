@@ -55,7 +55,7 @@ func _process(delta):
 		curBillRelativePosition = Util.bills[Util.curBillIndex].position.x - Util.billPosXOffset - Util.startingIndexBillPosXOffset
 		controls_disabled(false)
 		Util.is_in_bill_array_bounds()
-		select_cur_bill()
+
 		update_bill_scale()
 		if selectBtnPressed:
 			for n in Util.billQuantity:
@@ -141,7 +141,6 @@ func _on_select_pressed():
 	else:
 		selectBtnPressed = false
 		Util.bills[Util.curBillIndex].isSelected = false
-	select_cur_bill()
 var leftPressed = false
 var rightPressed = false
 func _on_arrow_left_pressed():
@@ -161,7 +160,6 @@ func _on_arrow_right_pressed():
 		rightPressed = true
 
 func arrow_pressed(multiplicative):
-	unselect_cur_bill()
 	selectedBillIndex = Util.curBillIndex
 	Util.bills[selectedBillIndex].isSelected = false
 	if selectBtnPressed:
@@ -265,14 +263,6 @@ func _on_bundle_pressed():
 			newBundle.position.x += 50 * billIterater
 
 
-func select_cur_bill():
-	
-	#Util.bills[Util.curBillIndex].get_node("BillSelect").show()
-	pass
-
-func unselect_cur_bill():
-	#Util.bills[Util.curBillIndex].get_node("BillSelect").hide()
-	pass
 
 func move_selected_bill(selectedBillIndex, targetIndex):
 	var selectedBillDenomination = Util.bills[selectedBillIndex].get_denomination()
@@ -310,3 +300,18 @@ func move_selected_bill(selectedBillIndex, targetIndex):
 		Util.bills[targetIndex].set_flipped(true)
 		Util.bills[selectedBillIndex].set_flipped(true)
 		
+
+
+func _on_keep_pressed():
+	for n in Util.bills.size():
+		if Util.bills.is_empty():
+			break
+
+		if Util.bills[0] in Util.bills:
+			Util.keptCash += int(Util.bills[0].get_denomination());
+			Util.bills[0].hide()
+			Util.bills.remove_at(0)
+		var newBundle = BUNDLE.instantiate()
+		moneyManagerMenu.add_child(newBundle)
+		newBundle.position.x += 440
+		newBundle.position.y += 460

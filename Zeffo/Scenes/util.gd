@@ -1,12 +1,17 @@
 extends Node2D
 var paused = false
 var bills = []
-var billQuantity = 60
+var billQuantity = 70
 var bundledQuantity = 30
 var frameL = curBillIndex
 var frameR = curBillIndex
 var curBillIndex = 5
-var totalCash = 0
+var actualTotal = 0
+var amountToKeep = 10
+# When the difficulty curve is implemented, this should be updated.
+# amountToKeep should be based on the amount of cash to deposit
+# which should change each day.
+var expectedCashToDeposit = 0
 var countedTotal = 0
 var billsCounted = 0
 var billMarginX = 100
@@ -18,6 +23,7 @@ var billPosYOffset = 250
 var startingIndexBillPosXOffset = 500
 var bundles = []
 var grandTotal = 0;
+var keptCash = 0;
 #var center = get_viewport().get_visible_rect().size / 2
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,6 +35,7 @@ func _process(delta):
 	is_in_bill_array_bounds()
 	if !bills.is_empty():
 		billQuantity = bills.size()
+		
 
 func is_in_bill_array_bounds():
 	if curBillIndex <= 0:
