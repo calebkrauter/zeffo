@@ -221,6 +221,7 @@ var firstOfSelectBundle = false
 var selectBundleAmt = 0
 var selectAndBundlePressed = false
 func _on_bundle_pressed():
+	print("bundle")
 	var billsBundled = 0;
 	var miscountChance = 0;
 	var miscountedBillDenominations = [];

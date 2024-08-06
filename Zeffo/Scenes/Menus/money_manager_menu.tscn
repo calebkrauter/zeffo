@@ -121,4 +121,3 @@ text = "KEEP"
 [connection signal="pressed" from="Flip" to="." method="_on_flip_pressed"]
 [connection signal="pressed" from="Bundle" to="." method="_on_bundle_pressed"]
 [connection signal="pressed" from="Keep" to="." method="_on_keep_pressed"]
-[connection signal="pressed" from="Keep" to="." method="_on_bundle_pressed"]
