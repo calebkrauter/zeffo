@@ -24,7 +24,6 @@ anchor_right = 1.0
 offset_left = -63.0
 offset_bottom = 31.0
 grow_horizontal = 0
-action_mode = 0
 text = "->"
 
 [node name="Select" type="Button" parent="."]
@@ -38,7 +37,6 @@ offset_left = -31.5
 offset_right = 31.5
 offset_bottom = 31.0
 grow_horizontal = 2
-action_mode = 0
 text = "SELECT"
 
 [node name="ArrowLeft" type="Button" parent="."]
@@ -47,7 +45,6 @@ layout_direction = 2
 layout_mode = 1
 offset_right = 63.0
 offset_bottom = 31.0
-action_mode = 0
 text = "<-"
 
 [node name="Count" type="Button" parent="."]
@@ -63,7 +60,6 @@ offset_left = -63.0
 offset_top = -31.0
 grow_horizontal = 0
 grow_vertical = 0
-action_mode = 0
 text = "Count"
 
 [node name="Flip" type="Button" parent="."]
@@ -80,7 +76,6 @@ offset_top = -31.0
 offset_right = 31.5
 grow_horizontal = 2
 grow_vertical = 0
-action_mode = 0
 text = "Flip"
 
 [node name="Bundle" type="Button" parent="."]
@@ -93,7 +88,6 @@ anchor_bottom = 1.0
 offset_top = -31.0
 offset_right = 63.0
 grow_vertical = 0
-action_mode = 0
 text = "Bundle"
 
 [node name="Keep" type="Button" parent="."]
@@ -111,7 +105,6 @@ offset_right = 30.9626
 offset_bottom = 17.0
 grow_horizontal = 0
 grow_vertical = 2
-action_mode = 0
 text = "KEEP"
 
 [connection signal="pressed" from="ArrowRight" to="." method="_on_arrow_right_pressed"]

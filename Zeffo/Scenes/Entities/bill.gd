@@ -3,8 +3,10 @@ extends Node2D
 @onready var bill_Select = $BillSelect
 var isSelected = false
 var isFlipped = false
+var heads = true
 var isBundled = false
-var denomination = "1"
+var denomination = "zero"
+@onready var indexLabel = $IndexLabel
 
 
 func set_denomination(denomination_in):
@@ -16,9 +18,11 @@ func get_denomination():
 func set_flipped(flipped_in):
 	self.isFlipped = flipped_in
 
+func is_flipped():
+	return self.isFlipped
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	bill_Select.hide()
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

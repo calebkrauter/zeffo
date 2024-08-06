@@ -15,7 +15,6 @@ scale = Vector2(1.5, 1.5)
 script = ExtResource("1_c7vhb")
 
 [node name="ArrowRight" type="Button" parent="."]
-texture_filter = 1
 layout_direction = 2
 layout_mode = 1
 anchors_preset = 1
@@ -24,11 +23,9 @@ anchor_right = 1.0
 offset_left = -63.0
 offset_bottom = 31.0
 grow_horizontal = 0
-action_mode = 0
 text = "->"
 
 [node name="Select" type="Button" parent="."]
-texture_filter = 1
 layout_direction = 2
 layout_mode = 1
 anchors_preset = 5
@@ -38,20 +35,16 @@ offset_left = -31.5
 offset_right = 31.5
 offset_bottom = 31.0
 grow_horizontal = 2
-action_mode = 0
 text = "SELECT"
 
 [node name="ArrowLeft" type="Button" parent="."]
-texture_filter = 1
 layout_direction = 2
 layout_mode = 1
 offset_right = 63.0
 offset_bottom = 31.0
-action_mode = 0
 text = "<-"
 
 [node name="Count" type="Button" parent="."]
-texture_filter = 1
 layout_direction = 2
 layout_mode = 1
 anchors_preset = 3
@@ -63,11 +56,9 @@ offset_left = -63.0
 offset_top = -31.0
 grow_horizontal = 0
 grow_vertical = 0
-action_mode = 0
 text = "Count"
 
 [node name="Flip" type="Button" parent="."]
-texture_filter = 1
 layout_direction = 2
 layout_mode = 1
 anchors_preset = 7
@@ -80,11 +71,9 @@ offset_top = -31.0
 offset_right = 31.5
 grow_horizontal = 2
 grow_vertical = 0
-action_mode = 0
 text = "Flip"
 
 [node name="Bundle" type="Button" parent="."]
-texture_filter = 1
 layout_direction = 2
 layout_mode = 1
 anchors_preset = 2
@@ -93,26 +82,7 @@ anchor_bottom = 1.0
 offset_top = -31.0
 offset_right = 63.0
 grow_vertical = 0
-action_mode = 0
 text = "Bundle"
-
-[node name="Keep" type="Button" parent="."]
-texture_filter = 1
-layout_direction = 2
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.704
-anchor_top = 0.5
-anchor_right = 1.704
-anchor_bottom = 0.5
-offset_left = -32.0374
-offset_top = -14.0
-offset_right = 30.9626
-offset_bottom = 17.0
-grow_horizontal = 0
-grow_vertical = 2
-action_mode = 0
-text = "KEEP"
 
 [connection signal="pressed" from="ArrowRight" to="." method="_on_arrow_right_pressed"]
 [connection signal="pressed" from="Select" to="." method="_on_select_pressed"]
@@ -120,5 +90,3 @@ text = "KEEP"
 [connection signal="pressed" from="Count" to="." method="_on_count_pressed"]
 [connection signal="pressed" from="Flip" to="." method="_on_flip_pressed"]
 [connection signal="pressed" from="Bundle" to="." method="_on_bundle_pressed"]
-[connection signal="pressed" from="Keep" to="." method="_on_keep_pressed"]
-[connection signal="pressed" from="Keep" to="." method="_on_bundle_pressed"]

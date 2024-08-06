@@ -1,0 +1,127 @@
+[gd_scene load_steps=7 format=3 uid="uid://bj7qyshfx0n7b"]
+
+[ext_resource type="Texture2D" uid="uid://cji2i37nx2q3f" path="res://Assets/Entities/BillManagementUI/BillEnhance/billSelect1.png" id="1_jfskn"]
+[ext_resource type="Texture2D" uid="uid://cypv1pg5fsmr2" path="res://Assets/Entities/BillManagementUI/BillEnhance/billSelect2.png" id="2_lkrat"]
+[ext_resource type="PackedScene" uid="uid://dcy33ghg8gd1p" path="res://Scenes/Menus/money_manager_menu.tscn" id="4_gocje"]
+[ext_resource type="PackedScene" uid="uid://b4x7kejgosoke" path="res://Scenes/ControlsUI/pause_btn.tscn" id="5_1e4y7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_skcqn"]
+animations = []
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q4frx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jfskn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_lkrat")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Selector" type="Node2D"]
+
+[node name="CameraContainer" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_skcqn")
+animation = &""
+
+[node name="Selector2D" type="AnimatedSprite2D" parent="CameraContainer"]
+position = Vector2(0, -67)
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_q4frx")
+
+[node name="MoneyManagerControl" type="Control" parent="CameraContainer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -574.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+metadata/_edit_use_anchors_ = true
+
+[node name="MoneyManagerMenu" parent="CameraContainer/MoneyManagerControl" instance=ExtResource("4_gocje")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.711
+anchor_right = 0.5
+anchor_bottom = 0.711
+offset_left = -177.0
+offset_top = -7.728
+offset_right = 58.0
+offset_bottom = 76.272
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="PauseControl" type="Control" parent="CameraContainer"]
+layout_mode = 3
+anchors_preset = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="PauseBtn" parent="CameraContainer/PauseControl" instance=ExtResource("5_1e4y7")]
+position = Vector2(-575, -322)
+
+[node name="CashTotal" type="Label" parent="CameraContainer"]
+offset_left = -496.0
+offset_top = -319.0
+offset_right = -318.0
+offset_bottom = -296.0
+text = "Cash Total Verification:"
+metadata/_edit_use_anchors_ = true
+
+[node name="GrowingTotal" type="Label" parent="CameraContainer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -495.0
+offset_top = -293.0
+offset_right = -317.0
+offset_bottom = -270.0
+grow_horizontal = 0
+text = "Current Total:
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="BillsCounted" type="Label" parent="CameraContainer"]
+offset_left = -496.0
+offset_top = -269.0
+offset_right = -318.0
+offset_bottom = -246.0
+text = "Bills Counted:
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="VerifyCounted" type="Label" parent="CameraContainer"]
+offset_left = -107.0
+offset_top = -319.0
+offset_right = 110.0
+offset_bottom = -296.0
+text = "All Bills Have Been Counted."
+metadata/_edit_use_anchors_ = true
+
+[node name="UnverifiedCount" type="Label" parent="CameraContainer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -496.0
+offset_top = -244.0
+offset_right = -356.0
+offset_bottom = -221.0
+grow_horizontal = 0
+text = "Unverified Count: "
+
+[node name="KeptCash" type="Label" parent="CameraContainer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 375.0
+offset_top = 124.0
+offset_right = 515.0
+offset_bottom = 147.0
+grow_horizontal = 0
+text = "You KEPT: $0"
+
+[node name="SelectorCam" type="Camera2D" parent="CameraContainer"]

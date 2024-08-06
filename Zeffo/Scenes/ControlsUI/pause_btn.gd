@@ -3,7 +3,8 @@ extends Node2D
 @onready var pause_menu_container = $PauseMenuContainer
 @onready var pause_btn = $PauseBtn
 @onready var money_manager_control = $"../../MoneyManagerControl"
-@onready var bills_control = $"../../BillsFrame/BillsControl"
+#@onready var bills_control = $"../../BillsFrame/BillsControl"
+@onready var bills_control = $"../../../../BillsFrame/BillsControl"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,5 +31,4 @@ func change_game_state():
 		pause_menu_container.hide()
 		money_manager_control.show()
 		bills_control.show()
-		Util.bills[Util.curBillIndex].get_node("BillSelect").show()
 		Engine.time_scale = 1
