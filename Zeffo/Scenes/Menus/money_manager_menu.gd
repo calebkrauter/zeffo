@@ -9,10 +9,10 @@ var flipBtnPressed = false
 @onready var countBtn = $Count
 @onready var flipBtn = $Flip
 @onready var bundleBtn = $Bundle
-@onready var controls = [arrowRightBtn, selectBtn, arrowLeftBtn, countBtn, flipBtn, bundleBtn]
+@onready var skipLeftBtn = $SkipLeft
+@onready var skipRightBtn = $SkipRight
+@onready var controls = [arrowRightBtn, selectBtn, arrowLeftBtn, countBtn, flipBtn, bundleBtn, skipLeftBtn, skipRightBtn]
 var slideOffset = Util.bundledQuantity
-#const SELECTOR_CAMERA = preload("res://Scenes/Entities/selectorCamera.tscn")
-#@onready var selector = $"../../Selector"
 @onready var selector = $"../../.."
 var selfTargetBill
 var selfSelectedBill
@@ -96,17 +96,19 @@ func move_bills(delta):
 func slide_selector(delta):
 	if direction == 1 && rightPressed:
 		if selector.position.x < prevSelectorPos + Util.billMarginX * direction:
-			selector.position.x += direction * delta * 2500
+			selector.position.x += direction * delta * Util.speedToMove * Util.speedMultiplier
 			if selector.position.x >= prevSelectorPos + Util.billMarginX * direction:
 				selector.position.x = prevSelectorPos + Util.billMarginX * direction
+				print(prevSelectorPos + Util.billMarginX * direction)
 		else:
 			prevSelectorPos = selector.position.x
 			rightPressed = false
 	elif direction == -1 && leftPressed:
 		if selector.position.x > prevSelectorPos + Util.billMarginX * direction:
-			selector.position.x += direction * delta * 2500
+			selector.position.x += direction * delta * Util.speedToMove * Util.speedMultiplier
 			if selector.position.x <= prevSelectorPos + Util.billMarginX * direction:
 				selector.position.x = prevSelectorPos + Util.billMarginX * direction
+				print(prevSelectorPos + Util.billMarginX * direction)
 		else:
 			prevSelectorPos = selector.position.x
 			leftPressed = false
@@ -359,3 +361,35 @@ func _on_keep_pressed():
 		moneyManagerMenu.add_child(newBundle)
 		newBundle.position.x += 440
 		newBundle.position.y += 460
+
+var speedHigh = false
+
+func _on_change_speed_pressed():
+	if !speedHigh:
+		Util.speedMultiplier = 3
+		speedHigh = true
+	else:
+		Util.speedMultiplier = 1
+		speedHigh = false
+
+
+func _on_skip_right_pressed():
+	#Util.speedMultiplier = 10
+	#for n in 8:
+		#rightPressed = true
+		#slide_selector(selfDelta)
+		#arrowRightBtn.emit_signal("pressed")
+	#Util.curBillIndex += -4
+	#Util.speedMultiplier = 1
+	pass
+
+
+func _on_skip_left_pressed():
+	#Util.speedMultiplier = 10
+	#for n in 9:
+		#leftPressed = true
+		#slide_selector(selfDelta)
+		#arrowLeftBtn.emit_signal("pressed")
+	##Util.curBillIndex += 1
+	#Util.speedMultiplier = 1
+	pass

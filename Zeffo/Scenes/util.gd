@@ -34,6 +34,8 @@ var weightCountScore = 3
 var weightSortScore = 2
 var weightBundleScore = 1
 var weightHeadsScore = 2
+var speedToMove = 2500
+var speedMultiplier = 1
 # The score barrier may need to be dynamic and based on the current day's
 # number of bills and days.
 var minimumScoreToSurvive = 600
