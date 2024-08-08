@@ -22,16 +22,10 @@ var bundleBtnPressed = false
 const BUNDLE = preload("res://Scenes/Entities/bundle.tscn")
 #var billLayoutContainer = Stage1OG.newBillLayout
 @onready var moneyManagerMenu = $"."
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	prevSelectorPos = selector.position.x
-	selfDelta = 0
-	prevBillPos = selector.position.x
-	await get_tree().process_frame
-	selfTargetBill = Util.bills[Util.curBillIndex]
-	selfSelectedBill = Util.bills[Util.curBillIndex]
-	verify_counted.visible = false
+var dontStartNewBundle = false
+var firstOfSelectBundle = false
+var selectBundleAmt = 0
+var selectAndBundlePressed = false
 var hitBound = false
 var hitBoundL = false
 var hitBoundR = false
@@ -42,9 +36,17 @@ var stop = false
 var selfDelta
 var curBillRelativePosition = 0
 var billIterater = 0
+var additive = 0
 @onready var verify_counted = $"../../VerifyCounted"
-
-
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	prevSelectorPos = selector.position.x
+	selfDelta = 0
+	prevBillPos = selector.position.x
+	await get_tree().process_frame
+	selfTargetBill = Util.bills[Util.curBillIndex]
+	selfSelectedBill = Util.bills[Util.curBillIndex]
+	verify_counted.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -91,33 +93,21 @@ func move_bills(delta):
 			Util.bills[n].position.x -= 5000 * delta
 			Util.bills[n].get_node("Bill2D").scale = Vector2(0.38, 0.38)
 
-
-
-
 func slide_selector(delta):
 	if direction == 1 && rightPressed:
-		#print("1")
-		#print(selector.position.x)
 		if selector.position.x < prevSelectorPos + Util.billMarginX * direction:
-			#print("2")
 			selector.position.x += direction * delta * 2500
 			if selector.position.x >= prevSelectorPos + Util.billMarginX * direction:
-				#print("3")
 				selector.position.x = prevSelectorPos + Util.billMarginX * direction
 		else:
-			#print("4")
 			prevSelectorPos = selector.position.x
 			rightPressed = false
 	elif direction == -1 && leftPressed:
-		#print("1")
 		if selector.position.x > prevSelectorPos + Util.billMarginX * direction:
-			#print("2")
 			selector.position.x += direction * delta * 2500
 			if selector.position.x <= prevSelectorPos + Util.billMarginX * direction:
-				#print("3")
 				selector.position.x = prevSelectorPos + Util.billMarginX * direction
 		else:
-			#print("4")
 			prevSelectorPos = selector.position.x
 			leftPressed = false
 
@@ -210,23 +200,13 @@ func flip(curBill):
 	else:
 		curBill.get_node("Bill2D").frame = 0
 
-func flip_heads(curBill):
-	curBill.get_node("Bill2D").frame = 1
-
-func flip_tails(curBill):
-	curBill.get_node("Bill2D").frame = 0
-
-var dontStartNewBundle = false
-var firstOfSelectBundle = false
-var selectBundleAmt = 0
-var selectAndBundlePressed = false
 func _on_bundle_pressed():
-	print("bundle")
-	var billsBundled = 0;
-	var miscountChance = 0;
-	var miscountedBillDenominations = [];
-	var dynamicBundledQuantity = Util.bundledQuantity;
-	var newBundleStarted = false;
+	var billsBundled = 0
+	var miscountChance = 0
+	var miscountedBillDenominations = []
+	var dynamicBundledQuantity = Util.bundledQuantity
+	var newBundleStarted = false
+	var tempBundleToCheckSorted = []
 	if !Util.bills.is_empty():
 		bundleBtnPressed = true
 		var numOfBillsMiscounted = 0
@@ -234,28 +214,28 @@ func _on_bundle_pressed():
 		var billIndexToRemove = 0
 		if !selectBtnPressed:
 			if dynamicBundledQuantity <= Util.bundledQuantity && dynamicBundledQuantity < 10:
-				dynamicBundledQuantity = Util.bills.size();
+				dynamicBundledQuantity = Util.bills.size()
 			for n in Util.bundledQuantity:
 				if Util.bills.is_empty():
-					break;
+					break
 				if n >= Util.bills.size():
-					break;
-				Util.grandTotal += int(Util.bills[n].get_denomination());
+					break
+				Util.grandTotal += int(Util.bills[n].get_denomination())
 				
 				if !Util.bills[n].get_node("Counted").visible && !foundBillNotCounted:
-					numOfBillsMiscounted = randi_range(0, 4);
+					numOfBillsMiscounted = randi_range(0, 4)
 					if numOfBillsMiscounted > Util.billQuantity:
 						numOfBillsMiscounted = Util.billQuantity
 					dynamicBundledQuantity -= numOfBillsMiscounted
 
 					for m in numOfBillsMiscounted:
 						if n + m >= Util.bundledQuantity - 1:
-							break;
+							break
 						else:
-							miscountedBillDenominations.append(int(Util.bills[n + m].get_denomination()));
-					foundBillNotCounted = true;
+							miscountedBillDenominations.append(int(Util.bills[n + m].get_denomination()))
+					foundBillNotCounted = true
 		else:
-			Util.grandTotal += int(Util.bills[Util.curBillIndex].get_denomination());
+			Util.grandTotal += int(Util.bills[Util.curBillIndex].get_denomination())
 			countBtn.emit_signal("pressed")
 			selectBtn.emit_signal("pressed")
 			dynamicBundledQuantity = 1
@@ -269,17 +249,19 @@ func _on_bundle_pressed():
 			else:
 				firstOfSelectBundle = false
 			selectBundleAmt += 1
-		
+
 		for n in dynamicBundledQuantity:
 			if Util.bills.is_empty():
 				break
-			billsBundled += 1;
+			tempBundleToCheckSorted.append(Util.bills[billIndexToRemove])
+			billsBundled += 1
 			if selectAndBundlePressed:
 				billsBundled = selectBundleAmt
 			if Util.bills[billIndexToRemove] in Util.bills:
 				Util.bills[billIndexToRemove].hide()
+				add_score(Util.bills[billIndexToRemove], tempBundleToCheckSorted, n)
 				Util.bills.remove_at(billIndexToRemove)
-				newBundleStarted = true;
+				newBundleStarted = true
 		if newBundleStarted && !dontStartNewBundle:
 			if !selectAndBundlePressed || firstOfSelectBundle:
 				billIterater += 1
@@ -292,9 +274,38 @@ func _on_bundle_pressed():
 			for n in Util.curBillIndex:
 				Util.bills[n].position.x += 100
 			selectAndBundlePressed = false
-	print(billsBundled)
-	print(selectBundleAmt)
+	additive = 0
+	check_sorted(tempBundleToCheckSorted)
+	calculate_score()
 
+func calculate_score():
+	Util.score += (Util.scoreFromBundle * Util.weightBundleScore 
+	+ Util.scoreFromCount * Util.weightCountScore
+	+ Util.scoreFromHeads * Util.weightHeadsScore
+	+ Util.scoreFromSort * Util.weightSortScore)
+	print(Util.score, " TOTAL SCORE")
+
+func check_sorted(array):
+	for n in array.size():
+		if !(n + 1 <= array.size() - 1):
+			break
+		if array[n].get_denomination() >= array[n + 1].get_denomination():
+			additive += 1
+		else:
+			additive = 0
+			return
+	Util.scoreFromSort += additive
+	#print(additive, " sorted")
+
+func add_score(curBill, tempBundleToCheckSorted, n):
+	Util.scoreFromBundle += 1
+	if curBill.get_node("Bill2D").frame == 1:
+		Util.scoreFromHeads += 1
+	if curBill.get_node("Counted").visible:
+		Util.scoreFromCount += 1
+	#print(Util.scoreFromBundle, " bundled")
+	#print(Util.scoreFromHeads, " heads up")
+	#print(Util.scoreFromCount, " counted")
 
 
 func move_selected_bill(selectedBillIndex, targetIndex):
@@ -341,7 +352,7 @@ func _on_keep_pressed():
 			break
 
 		if Util.bills[0] in Util.bills:
-			Util.keptCash += int(Util.bills[0].get_denomination());
+			Util.keptCash += int(Util.bills[0].get_denomination())
 			Util.bills[0].hide()
 			Util.bills.remove_at(0)
 		var newBundle = BUNDLE.instantiate()

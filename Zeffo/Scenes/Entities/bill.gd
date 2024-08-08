@@ -8,7 +8,6 @@ var isBundled = false
 var denomination = "zero"
 @onready var indexLabel = $IndexLabel
 
-
 func set_denomination(denomination_in):
 	self.denomination = denomination_in
 
